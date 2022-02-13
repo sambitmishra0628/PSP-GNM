@@ -23,6 +23,7 @@ is dictated by the local contact energy change at the mutant site.
 
 """
 
+from unicodedata import category
 import numpy as np
 from scipy import linalg
 import os
@@ -34,10 +35,11 @@ import glob
 import seaborn as sns
 import matplotlib.pyplot as plt
 from joblib import Parallel, delayed
+from sklearn.linear_model import LinearRegression
 
-FILE_MAP = {'BT': 'BETM990101.txt', 'MJ': 'MIYS960101.txt', 'TS': 'TANS760101.txt', 'AACC': 'aacc.csv'}
+FILE_MAP = {'MJ': 'MIYS960101.txt'}
 POT_MAT_DIR = 'potential_matrices' # Directory containing the potential matrix
-ENTROPY_MAT_DIR = 'entropy_matrices' # Directory containing the entropy matrix
+
 
 def map_resname_to_id(res_code):
     """Convert the 3-lettered residue code to single letter"""
@@ -188,35 +190,15 @@ def parse_energy_pot(filename):
     # print (f"aa ind dict = {aa_ind_dict}")        
     return aa_ind_dict
 
-def parse_aacc(filename):
-    "Parse the amino acid contact change file into a dictionary."
-    df = pd.read_csv(ENTROPY_MAT_DIR + '/' + filename)
-    aa_order = ['A','I','L','V','M','F','W','G','P','C','N','Q','S','T','Y','D','E','R','H','K']
-    aacc_dict = {}
-    for aa_x in aa_order:
-        aa_vals = list(df[aa_x])
-        for aa_y, cc_val in zip(aa_order, aa_vals):
-            key1 = aa_x + ':' + aa_y
-            key2 = aa_y + ':' + aa_x
-            aacc_dict[key1] = cc_val
-            aacc_dict[key2] = cc_val
-    return aacc_dict
-
-def energy_weighted_kirchoff(coord, res_codes, pot_type, cutoff, L, contact_matrix=None):
+def energy_weighted_kirchoff(coord, res_codes, pot_type, cutoff, contact_matrix=None):
     """ Get the Kirchoff's matrix in which the contact springs are assigned based on
     the energetic interaction between residues.
     If contact matrix is provided, then use it. Otherwise, calculate the contact matrix based
     on the residue coordinates.
     """
     pot_file = FILE_MAP[pot_type]
-    if pot_type != 'AACC':
-        pot_dict = parse_energy_pot(pot_file)
-        # Remove the identifer key "AA_INDEX_ID" from the
-        # dictionary as it causes issues while sorting the 
-        # dictionary.
-        del(pot_dict['AA_INDEX_ID'])
-    else:
-        pot_dict = parse_aacc(pot_file)
+    pot_dict = parse_energy_pot(pot_file)
+    del(pot_dict['AA_INDEX_ID'])
 
     # print (pot_dict)
     r,c = np.shape(coord)
@@ -233,18 +215,11 @@ def energy_weighted_kirchoff(coord, res_codes, pot_type, cutoff, L, contact_matr
             # the maximum weight based on the potential used.
             if abs(i-j) == 1:
                 # Make the interaction energies of the adjacent c_alpha atoms stronger
-                if pot_type == 'AACC':
-                    pot_ij = (1/(min(pot_dict.values()))) + 10
-                else:    
-                    pot_ij = min(pot_dict.values())-1 
+                pot_ij = min(pot_dict.values())-1 
             else:    
-                if pot_type == 'AACC':
-                    pot_ij = (1/pot_dict[res_i + ':' + res_j])
-                else:    
-                    pot_ij = pot_dict[res_i + ':' + res_j]
+                pot_ij = pot_dict[res_i + ':' + res_j]
             # The potential value is in energy terms. Convert to weights.
-            if pot_type != 'AACC':
-                pot_ij = round(np.exp(-pot_ij), 2)
+            pot_ij = round(np.exp(-pot_ij), 2)
             P[i,j] = pot_ij
     if contact_matrix.size != 0:
         # Typically useful when we want to provide a customized contact_matrix
@@ -252,26 +227,14 @@ def energy_weighted_kirchoff(coord, res_codes, pot_type, cutoff, L, contact_matr
     else:
         C, D = get_ca_contacts(coord, cutoff, r)
     energy_matrix = np.multiply(C,P)
-    #D_inv = -(1/D)**2
-    # energy_matrix = np.multiply()
     C = -C
 
     # We will weigh the residue-residue contacts by their energy potentials.
     K = np.multiply(C,P)
-    # We will multiply the energy weights with inverse of distance
-    # Take the Hadamard product of matrices D_inv and P.
-    # This is basically the element-wise product of the 2 matrices
-    #K = np.multiply(K,D_inv) 
     K_cpy = K.copy()
-    # Distance dependent GNM
-    #D_inv = -(1/D)
-    #K = D_inv.copy()
-    # print ("new")
-    # print (np.shape(K))
     for i in range(0,r):
         # Diagonals in Kirchoff matrix are sum of the rows/columns
         # except the diagonal. 
-        #K[i,i] = -(np.sum(C[i,:] * P[i,:] * D_inv[i,:])-K_cpy[i,i])
         K[i,i] = -(np.sum(C[i,:] * P[i,:])-K_cpy[i,i])
     return K, energy_matrix 
 
@@ -314,7 +277,7 @@ def calc_residue_cross_corr(V,E,n_modes=20):
     return C, bfact    
     
 def calc_internal_dist_change(C):
-    # Calculate the internal distance change given the cross-corr matrix
+    """Calculate the internal distance change given the cross-corr matrix"""
     r,c = np.shape(C)
     I = np.zeros((r,r))
     for i in range(0,r):
@@ -323,66 +286,30 @@ def calc_internal_dist_change(C):
             I[i,j] = round((C[i,i] + C[j,j] - 2*C[i,j]), 3)
     return I
 
-def calc_gnm(coord, cutoff=7.5, L=1, num_modes=20,
-             weighted=False, spring_type=None, res_codes=None, 
-             contact_matrix=None):
-    """ Run calculations for GNM.
-    The GNM can be either unweighted (default) or weighted (either by potentials or
-                                                            entropy)
-    """
-    if weighted:
-        """ Run calculations for GNM in which the interactions are weighted
-        between the residues.
-    
-        spring_type = Type of weighting for the interactions between residues.
-        The interaction spring can be either a potential-based (Betancourt-Thirumalai potential
-                                                                or Miyazawa-Jernigan potential) or may be entropy-based) 
-    
-        spring_type: 'MJ' (default), 'BT'
-                 'AACC'(entropy)
-        """
-        if spring_type == None:
-            sys.exit("Error! spring_type cannot be None for weighted GNM")
-        if type(res_codes) != list:
-            # print(type(res_codes))
-            sys.exit("Error! res_codes must be a list of 3-letter residue codes of all residues")
+def calc_gnm(coord, cutoff=9, num_modes=10, spring_type=None, res_codes=None, contact_matrix=None):
+    """ 
+    Run calculations for GNM in which the interactions are weighted
+    between the residues.
 
-        stat_pot = ['BT', 'MJ', 'AACC']
-        if spring_type in stat_pot:
-            K, e_matrix = energy_weighted_kirchoff(coord, res_codes, spring_type, cutoff, L, contact_matrix)
-        #elif spring_type == 'AACC':
-        #    K, e_matrix = entropy_weighted_kirchoff(coord, res_codes, spring_type, cutoff)
-        else:
-            sys.exit(f"Invalid spring type {spring_type}")
-    else:    
-        K = get_kirchoff(coord, cutoff, L)
-    E,V = linalg.eigh(K, turbo=True) # Returns eigen values and vectors
+    spring_type = Type of weighting for the interactions between residues.
+    The interaction strength is obtained from the Miyazawa-Jernigan contact
+    potential. 
+
+    spring_type: 'MJ' (default)
+    """
+    if spring_type == None:
+        sys.exit("Error! spring_type cannot be None for weighted GNM")
+    if type(res_codes) != list:
+        sys.exit("Error! res_codes must be a list of 3-letter residue codes of all residues")
+
+    stat_pot = ['MJ']
+    if spring_type in stat_pot:
+        K, e_matrix = energy_weighted_kirchoff(coord, res_codes, spring_type, cutoff, contact_matrix)
+    else:
+        sys.exit(f"Invalid spring type {spring_type}")
     
-    #idx = E.argsort()[::1]
-    #V = V[idx[1:]] # Skip the eigen vectors with 0 
-    #V = V[idx]
-    # print (E[0], E[1:10])
-    #E = E[idx] # Skip the eigen values of 0
+    E,V = linalg.eigh(K, turbo=True) # Returns eigen values and vectors    
     return V[:,1:num_modes+1], E[1:num_modes+1], e_matrix
-
-def get_kirchoff(coord, cutoff=3, L=1):
-    """Calculates the unweighted GNM Kirchoff matrix.
-    Parameters - 
-        coord - N x 3 matrix of coordinates
-        cutoff - distance cutoff 
-        L - lambda, a fixed integer corresponding to the stiffness of the 
-            spring
-    """
-    # Declare empty numpy array 
-    r,c = np.shape(coord)
-    C, D = get_contacts(coord, cutoff, r)
-    K = -C*L # Off diagonal elements in contact are allocated -L
-    print (np.shape(K))
-    print (f"cutoff= {cutoff}, L = {L}")
-    for i in range(0,r):
-        K[i,i] = sum(C[i])*L # Diagonals in Kirchoff matrix are sum of the rows/columns
-        print ("Changed...")
-    return K     
 
 def sanity_check(protherm_data_file):
     """
@@ -404,60 +331,20 @@ def sanity_check(protherm_data_file):
     df = pd.read_csv(protherm_data_file)
     total_recs = len(df)
     correct_recs = 0
-    match_status = []
-    for res_i,pos_i,seq_i in zip(df['WILD_RES'], df['RES_IND_SEQ'], df['PDB_SEQUENCE']):
-        if (not np.isnan(pos_i) and seq_i[int(pos_i)] ==  res_i):
-            correct_recs += 1
-            match_status.append('MATCH')
-        else:
-            match_status.append('MISMATCH')
+    for res_i_wt, res_i_mut, category_i, pos_i, seq_i in zip(df['WILD_RES'], df['MUTANT_RES'], df['Category'], df['RES_IND_SEQ'], df['PDB_SEQUENCE']):
+        if (not np.isnan(pos_i)):
+            if category_i == 'Forward' and seq_i[int(pos_i)] ==  res_i_wt:
+                correct_recs += 1
+            elif category_i == 'Reverse' and seq_i[int(pos_i)] ==  res_i_mut:
+                correct_recs += 1
     print (f"{correct_recs}/{total_recs} records show correct mutant position and amino acid match")
-    print (len(match_status))
-    return match_status
-
-def create_contact_map_fig(C,D,figfile, res_codes):
-    plot_rows, plot_cols = 1,2
-    num_res = len(res_codes)
-    plt.figure()
-    if len(D) == 0:
-        plot_rows, plot_cols = 1,1
-    if len(C) > 0:
-        plt.subplot(plot_rows, plot_cols, 1)
-        ax1 = sns.heatmap(C,cmap='jet', square=True, cbar=False)
-        ax1.invert_yaxis()
-        plt.title('C-alpha Contact Map')
-        x_ticks = list(np.arange(0, len(res_codes), 10))
-        y_ticks = list(np.arange(0, len(res_codes), 10))
-        ax1.set_xticks(range(0,num_res, 10))
-        ax1.set_xticklabels(x_ticks)
-        ax1.set_yticks(range(0,num_res, 10))
-        ax1.set_yticklabels(y_ticks)
-        plt.xticks(fontsize=6)
-        plt.yticks(fontsize=6)
-    if len(D) > 0:
-        plt.subplot(plot_rows, plot_cols, 2)
-        ax2 = sns.heatmap(D,cmap='jet', square=True, cbar=False)
-        ax2.invert_yaxis()
-        plt.title('C-alpha Distance Map')
-        x_ticks = list(np.arange(0, len(res_codes), 10))
-        y_ticks = list(np.arange(0, len(res_codes), 10))
-        ax2.set_xticks(range(0,num_res, 10))
-        ax2.set_xticklabels(x_ticks)
-        ax2.set_yticks(range(0,num_res, 10))
-        ax2.set_yticklabels(y_ticks)
-        plt.xticks(fontsize=6)
-        plt.yticks(fontsize=6)
-    plt.tight_layout()
-    plt.savefig(figfile, dpi=300)
-    plt.close()
 
 def simulate_unfolding(ca_coord, res_codes, pdb_id, dist_cutoff, num_modes, mut_or_wt='wt',serial_res_num=None):
     """
     Simulate unfolding based on change in internal distance between residues.
-    We will simulate the unfolding until 50 percent contacts made by the mutant position
+    We will simulate the unfolding until 50 percent contacts in the starting structure
     are broken.
     """
-    print (f"Num modes = {num_modes}, dist_cutoff = {dist_cutoff}")
     df_contact_breaks = pd.DataFrame()
     break_threshold = 0.5
 
@@ -482,17 +369,9 @@ def simulate_unfolding(ca_coord, res_codes, pdb_id, dist_cutoff, num_modes, mut_
         mut_pos_tot_contacts = len(mut_pos_contacts) * 2 # Consider both (i,j) and (j,i) pairs
     
     # Parse the potential matrix
-    if int_potential == 'AACC':
-        pot_file = FILE_MAP['MJ'] # Contingency fix. Change later.
-    else:    
-        pot_file = FILE_MAP[int_potential]
+    pot_file = FILE_MAP[int_potential]
     pot_dict = parse_energy_pot(pot_file)
     del(pot_dict['AA_INDEX_ID'])    # Remove the identifer key "AA_INDEX_ID"
-
-    # Parse the entropy matrix
-    entropy_mat = 'AACC'
-    entropy_file = FILE_MAP[entropy_mat]
-    entropy_dict = parse_aacc(entropy_file)
 
     mut_pos_num_broken_contacts = 0 # Number of contacts made by the mutant position that are broken
     total_contacts_broken = 0
@@ -505,7 +384,7 @@ def simulate_unfolding(ca_coord, res_codes, pdb_id, dist_cutoff, num_modes, mut_
         # For subsequent iterations, we will calculate the contact_matrix based on
         # the internal distance changes.
         #print ("Running calc_gnm...", end='', flush=True)
-        V,E, e_matrix = calc_gnm(ca_coord, dist_cutoff, L_adj, num_modes, True, int_potential, res_codes, contact_matrix)
+        V,E, e_matrix = calc_gnm(ca_coord, dist_cutoff, num_modes, int_potential, res_codes, contact_matrix)
         #print ("Done!")
         
         # If the second eigen value (calc_gnm excludes the first eigen value and 
@@ -551,17 +430,17 @@ def simulate_unfolding(ca_coord, res_codes, pdb_id, dist_cutoff, num_modes, mut_
                         res_code_i = res_codes[serial_res_num]
                         res_code_j = res_codes[pair_res_num]
                         
-                        column_names = ['PDB_ID', 'WT_or_Mut', 'Mutation_position', 'Contact_Position', 'Res_at_Mut_Position', 'Res_at_Contact_Pos', 'Energy_MJ', 'Entropy_AACC', 'Int_dist_change', 'Contact_break_rank']
+                        column_names = ['PDB_ID', 'WT_or_Mut', 'Mutation_position', 'Contact_Position', 'Res_at_Mut_Position', 'Res_at_Contact_Pos', 'Energy_MJ', 'Int_dist_change', 'Contact_break_rank']
                         df_tmp = pd.DataFrame([[pdb_id, mut_or_wt, serial_res_num, pair_res_num, res_code_i,
-                            res_code_j, pot_dict[res_code_i + ':' + res_code_j], entropy_dict[res_code_i + ':' + res_code_j],  max_int_dist_val, iteration]], columns=column_names)
+                            res_code_j, pot_dict[res_code_i + ':' + res_code_j], max_int_dist_val, iteration]], columns=column_names)
                         df_contact_breaks = df_contact_breaks.append(df_tmp)
                 else:
                     # If simulation is being done for a wildtype structure
                     res_code_i = res_codes[row_index]
                     res_code_j = res_codes[col_index]
-                    column_names = ['PDB_ID', 'WT_or_Mut', 'Mutation_position', 'Contact_Position', 'Res_at_Mut_Position', 'Res_at_Contact_Pos', 'Energy_MJ', 'Entropy_AACC', 'Int_dist_change', 'Contact_break_rank']
+                    column_names = ['PDB_ID', 'WT_or_Mut', 'Mutation_position', 'Contact_Position', 'Res_at_Mut_Position', 'Res_at_Contact_Pos', 'Energy_MJ', 'Int_dist_change', 'Contact_break_rank']
                     df_tmp = pd.DataFrame([[pdb_id, mut_or_wt, row_index, col_index, res_code_i,
-                            res_code_j, pot_dict[res_code_i + ':' + res_code_j], entropy_dict[res_code_i + ':' + res_code_j], max_int_dist_val, iteration]], columns=column_names)
+                            res_code_j, pot_dict[res_code_i + ':' + res_code_j], max_int_dist_val, iteration]], columns=column_names)
                     df_contact_breaks = df_contact_breaks.append(df_tmp)             
         total_contacts_broken += num_nonzero_contacts/2
         #print("Done!")
@@ -638,10 +517,10 @@ def run_ab_initio_stability_prediction_wildtype(pdb_i, outdir, processed_pdb_dir
     
     # Do not run calculations if outputfile already exists
     if os.path.isfile(outdir + outfile):
-        print (f"Skipping calculations for wildtype {pdb_i} as file is already present ")
+        print (f"Skipping unfolding simulation for wildtype {pdb_i} as contact-break file is already present ")
         return
     print (f"Running calculations for {pdb_i} wild type, dist_cutoff = {dist_cutoff}, num_modes = {num_modes}...", end='', flush=True)
-    df_contact_breaks_wt = calc_wt_energy_folded_unfolded(processed_pdb_dir, pdb_i,dist_cutoff, num_modes)
+    df_contact_breaks_wt = calc_wt_energy_folded_unfolded(processed_pdb_dir, pdb_i, dist_cutoff, num_modes)
     
     # Add info on exp ddG
     df_contact_breaks_wt['EXP_ddG'] = ['']*len(df_contact_breaks_wt)
@@ -659,7 +538,7 @@ def run_ab_initio_stability_prediction_mutant(row_i, outdir, processed_pdb_dir, 
     # Skip calculations if output file is already present
     outfile = pdb_i + '_' + row_i['WILD_RES'] + str(row_i['RES_NUM_PDB']) + row_i['MUTANT_RES'] + '_contact_breaks.csv'
     if os.path.isfile(outdir + outfile):
-        print (f"Skipping calculations for mutant {pdb_i}: {row_i['WILD_RES']}{row_i['RES_NUM_PDB']}{row_i['MUTANT_RES']} as file is already present!")
+        print (f"Skipping unfolding simulation for mutant {pdb_i}: {row_i['WILD_RES']}{row_i['RES_NUM_PDB']}{row_i['MUTANT_RES']} as contact-break file is already present!")
         return
     print (f"Running calculations for {pdb_i}, mutation {wt_res}{res_num_pdb}{mut_res} dist_cutoff = {dist_cutoff}, num_modes = {num_modes}...", end='', flush=True)
     df_contact_breaks_mut = calc_mut_energy_folded_unfolded(processed_pdb_dir, pdb_i, wt_res, mut_res, res_num_pdb, dist_cutoff, num_modes)
@@ -671,29 +550,30 @@ def run_ab_initio_stability_prediction_mutant(row_i, outdir, processed_pdb_dir, 
     # Write the calculation output to a file
     df_contact_breaks_mut.to_csv(outdir + outfile, index=False)
 
+
 @click.command()
-@click.option('--protherm_data_file', required=True, type=str, help='Name of the \
+@click.option('--data_file', required=True, type=str, help='Name of the \
 .csv file containing the information on ddG for the mutants')
 @click.option('--outfile', required=True, type=str, help='Name of the file to \
-    which the theoretical energies and experimental energies will be written')
+    which the PSP-GNM-calculated energies and experimental energies will be written')
 @click.option('--outdir', required=True, type=str, help='Name of the directory to \
     which the intermittent result files will be written to')    
 @click.option('--wt_pdb_dir',required=True, type=str, help='Directory containing \
 the wild type atomic pdb files')
 @click.option('--num_jobs',required=True, type=str, help='Maximum number \
 of jobs to be run in parallel')
-@click.option('--dist_cutoff',required=True, type=str, help='Distance cutoff \
-for interactions in GNM')
-@click.option('--num_modes',required=True, type=str, help='Number \
-of modes to be used')
+@click.option('--dist_cutoff',required=True, default=9, type=str, help='Distance cutoff \
+for interactions in GNM', show_default=True)
+@click.option('--num_modes',required=True, default=10, type=str, help='Number \
+of modes to be used', show_default=True)
 
-def run_ab_initio_stability_prediction_wrapper(protherm_data_file, outfile, outdir, wt_pdb_dir, num_jobs, dist_cutoff, num_modes):
+def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pdb_dir, num_jobs, dist_cutoff, num_modes):
     # Wrapper function that parallely performs calculations for each 
     # First perform a sanity check on the mutant csv file- check how many records correctly
     # correspond to the residue position and whether the sequence included in the
     # mutant_csv_file has the specified residue at that particular position.
     print ("Running sanity check...")    
-    match_status = sanity_check(protherm_data_file)
+    sanity_check(data_file)
     print  ("Done!")
     if not os.path.isdir(wt_pdb_dir):
         sys.exit(f"Error! {wt_pdb_dir} not found!")
@@ -718,10 +598,7 @@ def run_ab_initio_stability_prediction_wrapper(protherm_data_file, outfile, outd
     process_wt_pdb(wt_pdb_dir, processed_pdb_dir)
 
     # Make predictions for each mutant type
-    df_protherm_data = pd.read_csv(protherm_data_file)
-    column_names = ['PDB', 'WT_res', 'Mut_res', 'Mut_Position', 'PH', 
-    'Temperature', 'Experimental_ddG', 'Calc_energy_folded_WT', 'Calc_energy_unfolded_WT', 'Calc_dG_WT', 
-    'Calc_energy_folded_mutant', 'Calc_energy_unfolded_mutant', 'Calc_dG_mutant', 'Calc_ddG']
+    df_protherm_data = pd.read_csv(data_file)
     count = 0
     pdb_uniq = df_protherm_data['PDB_CHAIN'].unique().tolist()
     print (pdb_uniq)
@@ -735,14 +612,26 @@ def run_ab_initio_stability_prediction_wrapper(protherm_data_file, outfile, outd
     # intermediary contact breaks files.
     for idx_i, row_i in df_protherm_data.iterrows():
         # res_num is the residue number in the pdb file
-        pdb_i, wt_res, mut_res, res_num_pdb, res_num_serial = row_i['PDB_CHAIN'], row_i['WILD_RES'], row_i['MUTANT_RES'], row_i['RES_NUM_PDB'], row_i['RES_IND_SEQ']
-        
-        # Read the wild-type contact breaks file
-        wt_cont_brk_file = pdb_i + '_wt_contact_breaks.csv' 
-        df_cont_brk_wt = pd.read_csv(outdir + wt_cont_brk_file)
+        pdb_i, wt_res, mut_res, res_num_pdb, res_num_serial, mut_category = row_i['PDB_CHAIN'], row_i['WILD_RES'], row_i['MUTANT_RES'], row_i['RES_NUM_PDB'], row_i['RES_IND_SEQ'], row_i['Category']
+        if mut_category == 'Reverse':
+            # If the mutation category is reverse, we simply switch the wildtype and mutant residues and
+            # the contact break files.
+            wt_res, mut_res = mut_res, wt_res
+            # Switch the contact break files (i.e., wildtype contact break is now treated as the mutant
+            # contact break file and the mutant contact break file as the wildtype)
+            wt_cont_brk_file = pdb_i + '_' + row_i['WILD_RES'] + str(row_i['RES_NUM_PDB']) + row_i['MUTANT_RES'] + '_contact_breaks.csv'    
+            mut_cont_brk_file = pdb_i + '_wt_contact_breaks.csv' 
+        elif mut_category == 'Forward':    
+            # If the mutation category is Forward, then read the original wild-type and mutant 
+            # contact break files
+            wt_cont_brk_file = pdb_i + '_wt_contact_breaks.csv'
 
-        # Read the mutant contact breaks file
-        mut_cont_brk_file = pdb_i + '_' + row_i['WILD_RES'] + str(row_i['RES_NUM_PDB']) + row_i['MUTANT_RES'] + '_contact_breaks.csv'
+            # Read the mutant contact breaks file
+            mut_cont_brk_file = pdb_i + '_' + row_i['WILD_RES'] + str(row_i['RES_NUM_PDB']) + row_i['MUTANT_RES'] + '_contact_breaks.csv' 
+        else:
+            sys.exit(f"Invalid mutation category {mut_category} for {pdb_i} {wt_res}{res_num_pdb}{mut_res}. Mutation category must be either Forward or Reverse.")
+
+        df_cont_brk_wt = pd.read_csv(outdir + wt_cont_brk_file)
         df_cont_brk_mut = pd.read_csv(outdir + mut_cont_brk_file)
         
         # Skip the record if no contacts are broken with the residue at the mutation position
@@ -751,9 +640,14 @@ def run_ab_initio_stability_prediction_wrapper(protherm_data_file, outfile, outd
         # Calculate the theoretical ddG
         df_wt = df_cont_brk_wt.copy()
         df_mut = df_cont_brk_mut.copy()
-        df_wt = df_wt.loc[(df_wt['PDB_ID'] == pdb_i) & (df_wt['WT_or_Mut'] == 'wt') & (df_wt['Mutation_position'] == res_num_serial)]
-        df_mut = df_mut.loc[(df_mut['PDB_ID'] == pdb_i) & (df_mut['WT_or_Mut'] != 'wt') & (df_mut['Mutation_position'] == res_num_serial) & (df_mut['Res_at_Mut_Position'] == mut_res)]
-        
+
+        if mut_category == 'Forward':
+            df_wt = df_wt.loc[(df_wt['PDB_ID'] == pdb_i) & (df_wt['WT_or_Mut'] == 'wt') & (df_wt['Mutation_position'] == res_num_serial)]
+            df_mut = df_mut.loc[(df_mut['PDB_ID'] == pdb_i) & (df_mut['WT_or_Mut'] != 'wt') & (df_mut['Mutation_position'] == res_num_serial) & (df_mut['Res_at_Mut_Position'] == mut_res)]
+        elif mut_category == 'Reverse':
+            df_wt = df_wt.loc[(df_wt['PDB_ID'] == pdb_i) & (df_mut['WT_or_Mut'] != 'wt') & (df_wt['Mutation_position'] == res_num_serial) & (df_mut['Res_at_Mut_Position'] == wt_res)]
+            df_mut = df_mut.loc[(df_mut['PDB_ID'] == pdb_i) & (df_mut['Mutation_position'] == res_num_serial) & (df_mut['Res_at_Mut_Position'] == mut_res)]
+
         # If no contacts are broken in the wild type for the mutation position, then skip this position
         if len(df_wt) == 0:
             continue
@@ -761,8 +655,8 @@ def run_ab_initio_stability_prediction_wrapper(protherm_data_file, outfile, outd
         # Drop duplicate rows
         df_wt.drop_duplicates(inplace=True)
         df_mut.drop_duplicates(inplace=True)
-        print (f"df_mut = {df_mut}")
-        print (f"df_wt = {df_wt}")
+        # print (f"df_mut = {df_mut}")
+        # print (f"df_wt = {df_wt}")
         if len(df_mut) == 0:
             print (f"No contacts involving mutant residue broken while unfolding mutant structure {pdb_i} {wt_res}{res_num_pdb}{mut_res}")
             continue
@@ -788,19 +682,51 @@ def run_ab_initio_stability_prediction_wrapper(protherm_data_file, outfile, outd
         if len(df_mut) < min_len:
             min_len = len(df_mut)
         del_energy = df_mut['Energy_MJ'][0:min_len] - df_wt['Energy_MJ'][0:min_len]
-        del_entropy = df_mut['Entropy_AACC'][0:min_len] -df_wt['Entropy_AACC'][0:min_len]
         del_int_dist = df_mut['Int_dist_change'][0:min_len] - df_wt['Int_dist_change'][0:min_len]
         calc_ddG = sum(del_energy)
-        calc_ddE = sum(del_entropy)
         calc_ddI = sum(del_int_dist)
         calc_ddG_mean = calc_ddG/len(del_energy)
-        calc_ddE_mean = calc_ddE/len(del_entropy)
         calc_ddI_mean = calc_ddI/len(del_int_dist)
         
-        df_output_tmp = pd.DataFrame(data=[[pdb_i, wt_res, mut_res, res_num_pdb, res_num_serial, row_i['PH'], row_i['TEMPERATURE'], exp_ddG, calc_ddG, calc_ddE, calc_ddI, calc_ddG_mean, calc_ddE_mean, calc_ddI_mean]],
-            columns = ['PDB_ID', 'WT_Residue', 'Mutant_Residue', 'Res_Num_PDB', 'Res_Num_Serial', 'PH', 'Temperature','Exp_ddG', 'Calc_ddG', 'Calc_ddE', 'Calc_ddI', 'Calc_ddG_mean', 'Calc_ddE_mean', 'Calc_ddI_mean'])
+        df_output_tmp = pd.DataFrame(data=[[pdb_i, wt_res, mut_res, res_num_pdb, res_num_serial, row_i['PH'], row_i['TEMPERATURE'], mut_category, exp_ddG, calc_ddG, calc_ddI, calc_ddG_mean, calc_ddI_mean]],
+            columns = ['PDB_ID', 'WT_Residue', 'Mutant_Residue', 'Res_Num_PDB', 'Res_Num_Serial', 'PH', 'Temperature', 'Category', 'Exp_ddG', 'Calc_ddG', 'Calc_ddI', 'Calc_ddG_mean', 'Calc_ddI_mean'])
         df_output_all = df_output_all.append(df_output_tmp)
-    df_output_all.to_csv(outfile, index=False)
+    # Scale the calculated energy and ddI using the coefficients obtained by fitting
+    # the calculated energy to the experimental energy
+    
+    # Fit linear regression model for forward mutants
+    df_output_all_fw = df_output_all.copy()
+    df_output_all_fw = df_output_all_fw.loc[df_output_all_fw['Category'] == 'Forward']
+    if len(df_output_all_fw) > 0:
+        calc_ddG_unscaled = -(df_output_all_fw['Calc_ddG']-df_output_all_fw['Calc_ddI'])
+        reg_mdl_fw = LinearRegression().fit(np.array(calc_ddG_unscaled).reshape(-1,1),
+                                            df_output_all_fw['Exp_ddG'])
+        coeff,intercept = reg_mdl_fw.coef_[0], reg_mdl_fw.intercept_
+        coeff = round(coeff,2)
+        intercept = round(intercept,2)
+        ddG_PSP_GNM_fw = np.array(list(calc_ddG_unscaled))*coeff + intercept
+        df_output_all_fw['ddG_PSP_GNM'] = ddG_PSP_GNM_fw
+
+    # Fit linear regression model for reverse mutants
+    df_output_all_rev = df_output_all.copy()
+    df_output_all_rev = df_output_all_rev.loc[df_output_all_rev['Category'] == 'Reverse']
+    if len(df_output_all_rev) > 0:
+        calc_ddG_unscaled = -(df_output_all_rev['Calc_ddG']-df_output_all_rev['Calc_ddI'])
+        reg_mdl_rev = LinearRegression().fit(np.array(calc_ddG_unscaled).reshape(-1,1),
+                                            df_output_all_rev['Exp_ddG'])
+        coeff,intercept = reg_mdl_rev.coef_[0], reg_mdl_rev.intercept_
+        coeff = round(coeff,2)
+        intercept = round(intercept,2)
+        ddG_PSP_GNM_rev = np.array(list(calc_ddG_unscaled))*coeff + intercept
+        df_output_all_rev['ddG_PSP_GNM'] = ddG_PSP_GNM_rev
+    if len(df_output_all_fw) > 0 and len(df_output_all_rev) > 0:
+        df_output_all_new = pd.concat([df_output_all_fw, df_output_all_rev])
+    elif len(df_output_all_fw) > 0:
+        df_output_all_new = df_output_all_fw
+    else:
+        df_output_all_new = df_output_all_rev                   
+    
+    df_output_all_new.to_csv(outfile, index=False)
     print (f"Wrote all calculations to {outfile}")
 
 
