@@ -8,18 +8,16 @@ a weighted Gaussian network model
 Gaussian Network Model (GNM)
 
 - The interactions between amino acid residues in such a model will
-be weighted using statistical potentials
+be weighted using statistical potentials - in this case, Miyazawa-Jernigan potential
 
 - Simulate unfolding of the wild-type structure by identifying residues
 with most internal distance changes as the ones to break contact first
 
 - Calculate the difference in energies (from the potential matrix) and
-entropies (AACC matrix) for the first few contacts broken at the mutant position
-for the mutant and wild-type structures (calc_ddG). This is where this code 
-differs from the ab_initio_psp.py code. Assumption is that the unfolding energy
-is dictated by the local contact energy change at the mutant site.
+entropies (based on the mean-squared fluctuation in distance) of the mutant
+and wildtype structures to estimate the ddG.
 
-- Verify correlation between experimental ddG and calc_ddG
+- This code is intended to be run on the benchmark data used in the manuscript
 
 """
 
