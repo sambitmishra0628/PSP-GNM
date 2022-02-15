@@ -23,7 +23,6 @@ is dictated by the local contact energy change at the mutant site.
 
 """
 
-from unicodedata import category
 import numpy as np
 from scipy import linalg
 import os
@@ -359,7 +358,7 @@ def simulate_unfolding(ca_coord, res_codes, pdb_id, dist_cutoff, num_modes, mut_
     num_res = len(res_codes)
     C,D = get_ca_contacts(ca_coord, dist_cutoff, num_res)
     tot_contacts_folded = C.sum()/2
-    print (f"Total contacts in folded protein = {tot_contacts_folded}")
+    # print (f"Total contacts in folded protein = {tot_contacts_folded}")
     if mut_or_wt != 'wt':
         res_at_mut_pos = res_codes[serial_res_num] # Get the residue at the mutant position
    
@@ -517,14 +516,13 @@ def run_ab_initio_stability_prediction_wildtype(pdb_i, outdir, processed_pdb_dir
     
     # Do not run calculations if outputfile already exists
     if os.path.isfile(outdir + outfile):
-        print (f"Skipping unfolding simulation for wildtype {pdb_i} as contact-break file is already present ")
+        print (f"Skipping unfolding simulation for wildtype {pdb_i} as contact-break file is already present!", flush=True)
         return
     print (f"Running calculations for {pdb_i} wild type, dist_cutoff = {dist_cutoff}, num_modes = {num_modes}...", end='', flush=True)
     df_contact_breaks_wt = calc_wt_energy_folded_unfolded(processed_pdb_dir, pdb_i, dist_cutoff, num_modes)
     
     # Add info on exp ddG
     df_contact_breaks_wt['EXP_ddG'] = ['']*len(df_contact_breaks_wt)
-    print ("Done!")
 
     # Write the calculation output to a file
     df_contact_breaks_wt.to_csv(outdir + outfile, index=False)
@@ -533,22 +531,36 @@ def run_ab_initio_stability_prediction_mutant(row_i, outdir, processed_pdb_dir, 
     """
     Run calculations for the mutant position
     """
-    pdb_i, wt_res, mut_res, res_num_pdb, res_num_serial = row_i['PDB_CHAIN'], row_i['WILD_RES'], row_i['MUTANT_RES'], row_i['RES_NUM_PDB'], row_i['RES_IND_SEQ']
+    pdb_i, wt_res, mut_res, res_num_pdb, res_num_serial, mut_category = row_i['PDB_CHAIN'], row_i['WILD_RES'], row_i['MUTANT_RES'], row_i['RES_NUM_PDB'], row_i['RES_IND_SEQ'], row_i['Category']
 
     # Skip calculations if output file is already present
     outfile = pdb_i + '_' + row_i['WILD_RES'] + str(row_i['RES_NUM_PDB']) + row_i['MUTANT_RES'] + '_contact_breaks.csv'
-    if os.path.isfile(outdir + outfile):
+    if mut_category == 'Forward' and os.path.isfile(outdir + outfile):
         print (f"Skipping unfolding simulation for mutant {pdb_i}: {row_i['WILD_RES']}{row_i['RES_NUM_PDB']}{row_i['MUTANT_RES']} as contact-break file is already present!")
         return
-    print (f"Running calculations for {pdb_i}, mutation {wt_res}{res_num_pdb}{mut_res} dist_cutoff = {dist_cutoff}, num_modes = {num_modes}...", end='', flush=True)
-    df_contact_breaks_mut = calc_mut_energy_folded_unfolded(processed_pdb_dir, pdb_i, wt_res, mut_res, res_num_pdb, dist_cutoff, num_modes)
+    if mut_category == 'Forward' and not os.path.isfile(outdir + outfile):
+        print (f"Running calculations for {pdb_i}, mutation {wt_res}{res_num_pdb}{mut_res} dist_cutoff = {dist_cutoff}, num_modes = {num_modes}...", end='', flush=True)
+        df_contact_breaks_mut = calc_mut_energy_folded_unfolded(processed_pdb_dir, pdb_i, wt_res, mut_res, res_num_pdb, dist_cutoff, num_modes)
     
-    # Add info on exp ddG
-    df_contact_breaks_mut['EXP_ddG'] = [row_i['EXP_DDG']]*len(df_contact_breaks_mut)
-    print ("Done!")
-
-    # Write the calculation output to a file
-    df_contact_breaks_mut.to_csv(outdir + outfile, index=False)
+    # If this mutant is a reverse mutant, we also need to generate the contact breaks file for the forward mutant
+    # if that is not already present
+    outfile2 = pdb_i + '_' + row_i['MUTANT_RES'] + str(row_i['RES_NUM_PDB']) + row_i['WILD_RES'] + '_contact_breaks.csv'
+    if mut_category == 'Reverse' and not os.path.isfile(outdir + outfile2):
+        print (f"Running calculations for {pdb_i}, mutation {mut_res}{res_num_pdb}{wt_res} dist_cutoff = {dist_cutoff}, num_modes = {num_modes}...", end='', flush=True)
+        df_contact_breaks_mut_2 = calc_mut_energy_folded_unfolded(processed_pdb_dir, pdb_i, mut_res, wt_res, res_num_pdb, dist_cutoff, num_modes) # We switch the mutant and the wildtype
+    
+    # Add info on exp ddG if df_contact_breaks_mut variable exists
+    if 'df_contact_breaks_mut' in locals():
+        df_contact_breaks_mut['EXP_ddG'] = [row_i['EXP_DDG']]*len(df_contact_breaks_mut)
+        # Write the calculation output to a file
+        df_contact_breaks_mut.to_csv(outdir + outfile, index=False)
+    
+    # If the mutation category is reverse, we will need the contact break info
+    # on the forward mutation if not already present.
+    if mut_category == 'Reverse' and 'df_contact_breaks_mut_2' in locals():
+        df_contact_breaks_mut_2['EXP_ddG'] = [row_i['EXP_DDG']]*len(df_contact_breaks_mut_2)
+        df_contact_breaks_mut_2.to_csv(outdir + outfile2, index=False)
+    return    
 
 
 @click.command()
@@ -572,9 +584,9 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
     # First perform a sanity check on the mutant csv file- check how many records correctly
     # correspond to the residue position and whether the sequence included in the
     # mutant_csv_file has the specified residue at that particular position.
-    print ("Running sanity check...")    
+    print ("Running sanity check...", flush=True)    
     sanity_check(data_file)
-    print  ("Done!")
+    print  ("Done!", flush=True)
     if not os.path.isdir(wt_pdb_dir):
         sys.exit(f"Error! {wt_pdb_dir} not found!")
     if not wt_pdb_dir.endswith('/'):
@@ -601,7 +613,7 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
     df_protherm_data = pd.read_csv(data_file)
     count = 0
     pdb_uniq = df_protherm_data['PDB_CHAIN'].unique().tolist()
-    print (pdb_uniq)
+
     # First run calculations for the wild type structures 
     Parallel(n_jobs=num_jobs)(delayed(run_ab_initio_stability_prediction_wildtype)(pdb_i, outdir, processed_pdb_dir, dist_cutoff, num_modes) for pdb_i in pdb_uniq)
     
@@ -612,14 +624,11 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
     # intermediary contact breaks files.
     for idx_i, row_i in df_protherm_data.iterrows():
         # res_num is the residue number in the pdb file
-        pdb_i, wt_res, mut_res, res_num_pdb, res_num_serial, mut_category = row_i['PDB_CHAIN'], row_i['WILD_RES'], row_i['MUTANT_RES'], row_i['RES_NUM_PDB'], row_i['RES_IND_SEQ'], row_i['Category']
+        pdb_i, wt_res, mut_res, res_num_pdb, res_num_serial, mut_category, exp_ddG = row_i['PDB_CHAIN'], row_i['WILD_RES'], row_i['MUTANT_RES'], row_i['RES_NUM_PDB'], row_i['RES_IND_SEQ'], row_i['Category'], row_i['EXP_DDG']
         if mut_category == 'Reverse':
-            # If the mutation category is reverse, we simply switch the wildtype and mutant residues and
-            # the contact break files.
-            wt_res, mut_res = mut_res, wt_res
             # Switch the contact break files (i.e., wildtype contact break is now treated as the mutant
             # contact break file and the mutant contact break file as the wildtype)
-            wt_cont_brk_file = pdb_i + '_' + row_i['WILD_RES'] + str(row_i['RES_NUM_PDB']) + row_i['MUTANT_RES'] + '_contact_breaks.csv'    
+            wt_cont_brk_file = pdb_i + '_' + row_i['MUTANT_RES'] + str(row_i['RES_NUM_PDB']) + row_i['WILD_RES'] + '_contact_breaks.csv'    
             mut_cont_brk_file = pdb_i + '_wt_contact_breaks.csv' 
         elif mut_category == 'Forward':    
             # If the mutation category is Forward, then read the original wild-type and mutant 
@@ -636,7 +645,12 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
         
         # Skip the record if no contacts are broken with the residue at the mutation position
         if len(df_cont_brk_mut) == 0:
+            print (f"No contacts involving mutation position broken for {mut_category} mutant, {pdb_i} : {wt_res}{res_num_pdb}{mut_res}")
             continue
+        elif len(df_cont_brk_wt) == 0:
+            print (f"No contacts involving mutation position broken for wildtype of the {mut_category} mutant, {pdb_i} : {wt_res}{res_num_pdb}{mut_res}")
+            continue
+
         # Calculate the theoretical ddG
         df_wt = df_cont_brk_wt.copy()
         df_mut = df_cont_brk_mut.copy()
@@ -645,26 +659,25 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
             df_wt = df_wt.loc[(df_wt['PDB_ID'] == pdb_i) & (df_wt['WT_or_Mut'] == 'wt') & (df_wt['Mutation_position'] == res_num_serial)]
             df_mut = df_mut.loc[(df_mut['PDB_ID'] == pdb_i) & (df_mut['WT_or_Mut'] != 'wt') & (df_mut['Mutation_position'] == res_num_serial) & (df_mut['Res_at_Mut_Position'] == mut_res)]
         elif mut_category == 'Reverse':
-            df_wt = df_wt.loc[(df_wt['PDB_ID'] == pdb_i) & (df_mut['WT_or_Mut'] != 'wt') & (df_wt['Mutation_position'] == res_num_serial) & (df_mut['Res_at_Mut_Position'] == wt_res)]
+            df_wt = df_wt.loc[(df_wt['PDB_ID'] == pdb_i) & (df_wt['Mutation_position'] == res_num_serial) ]
             df_mut = df_mut.loc[(df_mut['PDB_ID'] == pdb_i) & (df_mut['Mutation_position'] == res_num_serial) & (df_mut['Res_at_Mut_Position'] == mut_res)]
 
-        # If no contacts are broken in the wild type for the mutation position, then skip this position
-        if len(df_wt) == 0:
-            continue
-            
         # Drop duplicate rows
         df_wt.drop_duplicates(inplace=True)
         df_mut.drop_duplicates(inplace=True)
         # print (f"df_mut = {df_mut}")
         # print (f"df_wt = {df_wt}")
         if len(df_mut) == 0:
-            print (f"No contacts involving mutant residue broken while unfolding mutant structure {pdb_i} {wt_res}{res_num_pdb}{mut_res}")
+            print (f"No contacts involving mutant residue broken while unfolding mutant structure of the {mut_category} mutant: {pdb_i} {wt_res}{res_num_pdb}{mut_res}")
             continue
-
+        
+        # If no contacts are broken in the wild type for the mutation position, then skip this position
+        if len(df_wt) == 0:
+            print (f"No contacts involving mutant residue broken while unfolding wildtype structure of the {mut_category} mutant: {pdb_i} {wt_res}{res_num_pdb}{mut_res}")
+            continue
         df_wt.reset_index(drop=True, inplace=True)
         df_mut.reset_index(drop=True, inplace=True)
-        exp_ddG = df_mut['EXP_ddG'][0]
-
+        
         # Sort by contact break rank
         df_wt = df_wt.sort_values(by=['Contact_break_rank'])
         df_mut = df_mut.sort_values(by=['Contact_break_rank'])
@@ -687,7 +700,7 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
         calc_ddI = sum(del_int_dist)
         calc_ddG_mean = calc_ddG/len(del_energy)
         calc_ddI_mean = calc_ddI/len(del_int_dist)
-        
+
         df_output_tmp = pd.DataFrame(data=[[pdb_i, wt_res, mut_res, res_num_pdb, res_num_serial, row_i['PH'], row_i['TEMPERATURE'], mut_category, exp_ddG, calc_ddG, calc_ddI, calc_ddG_mean, calc_ddI_mean]],
             columns = ['PDB_ID', 'WT_Residue', 'Mutant_Residue', 'Res_Num_PDB', 'Res_Num_Serial', 'PH', 'Temperature', 'Category', 'Exp_ddG', 'Calc_ddG', 'Calc_ddI', 'Calc_ddG_mean', 'Calc_ddI_mean'])
         df_output_all = df_output_all.append(df_output_tmp)
@@ -710,6 +723,7 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
     # Fit linear regression model for reverse mutants
     df_output_all_rev = df_output_all.copy()
     df_output_all_rev = df_output_all_rev.loc[df_output_all_rev['Category'] == 'Reverse']
+
     if len(df_output_all_rev) > 0:
         calc_ddG_unscaled = -(df_output_all_rev['Calc_ddG']-df_output_all_rev['Calc_ddI'])
         reg_mdl_rev = LinearRegression().fit(np.array(calc_ddG_unscaled).reshape(-1,1),
@@ -725,7 +739,7 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
         df_output_all_new = df_output_all_fw
     else:
         df_output_all_new = df_output_all_rev                   
-    
+
     df_output_all_new.to_csv(outfile, index=False)
     print (f"Wrote all calculations to {outfile}")
 
