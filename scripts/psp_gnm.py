@@ -32,7 +32,14 @@ POT_MAT_DIR = 'potential_matrices' # Directory containing the potential matrix
 
 
 def map_resname_to_id(res_code):
-    """Convert the 3-lettered residue code to single letter"""
+    """
+    Convert the 3-lettered residue code to single letter
+    
+    Parameters:
+        res_code: The three-lettered amino acid code
+    Returns:
+        The corresponding single-letter amino acid code
+    """
     resname_2_id = {'ALA' : 'A', 'ARG' : 'R', 'ASN' : 'N', 'ASP' : 'D',
                     'CYS' : 'C', 'GLY' : 'G', 'GLN' : 'Q', 'GLU' : 'E',
                     'HIS' : 'H', 'ILE' : 'I', 'LEU' : 'L', 'LYS' : 'K',
@@ -42,8 +49,11 @@ def map_resname_to_id(res_code):
 
 def process_wt_pdb (input_dir, output_dir):
     """
-    Process the pdb file of the wild types to filter alternative
-    locations
+    Process the atomic PDB structures
+    
+    Parameters:
+        input_dir: Directory containing the raw PDB files
+        output_dir: Directory to which the processed files will be written into
     """
     if not input_dir.endswith('/'):
         input_dir = input_dir + '/'
@@ -91,6 +101,11 @@ def process_wt_pdb (input_dir, output_dir):
 def parse_calpha_pdb (pdbfile):
     """
     Parse the coordinates of the c-alpha atoms from the given pdb file
+   
+    Parameters:
+        pdb_file: The PDB file with path
+    Returns:
+        PDB_struct: A dictionary containing the parsed information
     """ 
     PDB_struct = {}
     fh = open(pdbfile, 'r')
@@ -136,7 +151,15 @@ def parse_calpha_pdb (pdbfile):
     return PDB_struct
 
 def parse_energy_pot(filename):    
-    "Parse the potential file into a dictionary"
+    """
+    Parse the Miyazawa-Jernigan potential matrix file into a dictionary
+   
+    Parameters:
+        filename : The name of the file that includes the MJ potential as given
+        in the AA Index database.
+    Returns:
+        aa_ind_dict: A dictionary containing the parsed MJ potential
+    """   
     with open(POT_MAT_DIR + '/' + filename, 'r') as fh:
         fc = fh.readlines()
         aa_ind_str = ''.join(fc)
@@ -181,10 +204,19 @@ def parse_energy_pot(filename):
     return aa_ind_dict
 
 def energy_weighted_kirchoff(coord, res_codes, pot_type, cutoff, contact_matrix=None):
-    """ Get the Kirchoff's matrix in which the contact springs are assigned based on
-    the energetic interaction between residues.
-    If contact matrix is provided, then use it. Otherwise, calculate the contact matrix based
-    on the residue coordinates.
+    """ 
+    Get the Kirchoff's matrix in which the contact springs are assigned based on
+    the energetic interaction between residues. If contact matrix is provided, then use it.
+    Otherwise, calculate the contact matrix based on the residue coordinates.
+    Parameters:
+        coord : The C-alpha coordinates
+        res_codes: The amino acid sequence of the PDB (as obtained from the PDB file)
+        pot_type: By default it's the MJ potential
+        cutoff: The C-alpha distance cutoff for interacting residues
+        contact_matrix: The C-alpha residue-residue contact matrix.
+    Returns:
+        K: The weighted Kirchhoff matrix
+        energy_matrix: The matrix of interaction energies for the interacting residues
     """
     pot_file = FILE_MAP[pot_type]
     pot_dict = parse_energy_pot(pot_file)
@@ -230,7 +262,18 @@ def energy_weighted_kirchoff(coord, res_codes, pot_type, cutoff, contact_matrix=
 
 def get_ca_contacts(coord, cutoff, num_res):
     """
-    Get the contact matrix between c-alpha atoms
+    Get the contact matrix for the C-alpha atoms 
+    
+    Parameters:
+        coord: The coordinates of the C-alpha atoms as N-by-3 numpy array.
+        N is the total number of residues.
+        
+        cutoff: Distance cutoff of C-alpha atoms that defines an interacting pair
+        
+        num_res: Total number of residues in the protein
+    Returns:
+        C: C-alpha contact matrix
+        D: C-alpha distance matrix
     """
     C = np.zeros((num_res,num_res)) # Contact matrix
     D = np.ones((num_res, num_res)) # Distance matrix
@@ -251,7 +294,18 @@ def get_ca_contacts(coord, cutoff, num_res):
     return C, D
 
 def calc_residue_cross_corr(V,E,n_modes=20):
-    """Calculate the cross correlations between residues"""
+    """
+    Calculate the cross correlations between residues 
+    
+    Parameters:
+        V: The matrix including the modes (eigen values)
+        E: The eigen vectors associated with each mode
+        n_modes: Total number of modes
+    Returns:
+        C: Cross correlation matrix
+        bfact: The theoretical residue mean-squared fluctuations
+    """    
+
     n_res = len(V[:,0])
     nrow,ncol = np.shape(V)
     if n_modes > ncol:
@@ -267,7 +321,15 @@ def calc_residue_cross_corr(V,E,n_modes=20):
     return C, bfact    
     
 def calc_internal_dist_change(C):
-    """Calculate the internal distance change given the cross-corr matrix"""
+    """ 
+    Calculate the internal distance change (aka mean-squared fluctuation in distance 
+    between a residue pair) given the cross-correlation matrix
+    
+    Parameters:
+        C: The matrix including correlations and cross-correlations between the C-alpha atoms
+    Returns:
+        I: Internal distance change matrix
+    """
     r,c = np.shape(C)
     I = np.zeros((r,r))
     for i in range(0,r):
@@ -280,12 +342,30 @@ def calc_gnm(coord, cutoff=9, num_modes=10, spring_type=None, res_codes=None, co
     """ 
     Run calculations for GNM in which the interactions are weighted
     between the residues.
-
-    spring_type = Type of weighting for the interactions between residues.
-    The interaction strength is obtained from the Miyazawa-Jernigan contact
-    potential. 
-
-    spring_type: 'MJ' (default)
+    
+    Parameters:
+        coord: The C-alpha coordinates
+        
+        cutoff: Cutoff distance between residue C-alpha atoms that defines
+        the interactions between residues
+        
+        num_modes: The total number of low frequency modes with non-zero
+        eigen values to be returned
+        
+        spring_type: Type of weighting for the interactions between residues.
+        The interaction strength is obtained from the Miyazawa-Jernigan contact
+        potential. Default spring type in this implementation is 'MJ'
+        
+        res_codes: The single letter amino acid sequence of the protein that
+        corresponds to the PDB sequence.
+        
+        contact_matrix: The C-alpha contact matrix
+    Returns:
+        V: Matrix of low-frequency modes (eigen vectors). The total number
+        of modes is equal to the num_modes
+        E: Eigen values for the num_modes low-frequency modes
+        e_matrix: The potential matrix defining the interaction strengths of the
+        interacting residues    
     """
     if spring_type == None:
         sys.exit("Error! spring_type cannot be None for weighted GNM")
@@ -306,10 +386,9 @@ def sanity_check(data_file, pdb_dir):
     Check how many records in the mutant csv file have correct correspondence
     between the mutated amino acid and its position in the wildtype sequence.
 
-    Parameters
-    ----------
-    data_file : Name of the data file with information on PDB_ID, wt_residue, mut_residue, residue_position
-    pdb_dir : The directory including the atomic processed PDB files
+    Parameters:
+        data_file : Name of the data file with information on PDB_ID, wt_residue, mut_residue, residue_position
+        pdb_dir : The directory including the atomic processed PDB files
 
     Returns: Total number of records that have correct mapping
     """
@@ -343,9 +422,27 @@ def sanity_check(data_file, pdb_dir):
 
 def simulate_unfolding(ca_coord, res_codes, pdb_id, dist_cutoff, num_modes, mut_or_wt='wt',serial_res_num=None):
     """
-    Simulate unfolding based on change in internal distance between residues.
-    We will simulate the unfolding until 50 percent contacts in the starting structure
+    Simulate unfolding based on change in internal distance (mean-squared fluctuation in distance)
+    between residues. We will simulate the unfolding until 50 percent contacts in the starting structure
     are broken.
+    
+    Parameters:
+        ca_coord: The C-alpha coordinates
+        
+        res_codes: The single letter amino acid sequence of the protein that
+        corresponds to the PDB sequence.
+        pdb_id: The four-letterd PDB ID plus the chain ID
+        
+        dist_cutoff: Cutoff distance between residue C-alpha atoms that defines
+        the interactions between residues
+        
+        num_modes: The total number of low frequency modes with non-zero
+        eigen values to be returned
+        mut_or_wt: Whether the simulation is being done for the mutant or wildtype protein
+        
+        serial_res_num: The serial index of the mutant position (not the PDB position).
+    Returns:
+        df_contact_breaks: A dataframe including information on the contacts broken
     """
     df_contact_breaks = pd.DataFrame()
     break_threshold = 0.5
@@ -453,9 +550,25 @@ def simulate_unfolding(ca_coord, res_codes, pdb_id, dist_cutoff, num_modes, mut_
     return df_contact_breaks
 
 def calc_mut_energy_folded_unfolded(processed_pdb_dir, pdb_i, wt_res, mut_res, res_num, dist_cutoff, num_modes):
-    """
-    Calculate the interaction energy of the folded and unfolded mutant structure.
-    res_num is the residue number in the pdb file
+    """ 
+    Calculate the interaction energies in the folded and unfolded mutant structure.
+    
+    Parameters:
+        processed_pdb_dir: The directory having the processed PDB files
+        
+        pdb_i: The four-letterd PDB ID plus the chain ID
+        wt_res: The amino acid (single letter) at the mutation position in the wildtype 
+        structure
+        mut_res: The amino acid (single letter) at the mutation position in the mutant
+        structure
+        res_num: The mutation postion number as in the PDB file
+        dist_cutoff: Cutoff distance between residue C-alpha atoms that defines
+        the interactions between residues
+        
+        num_modes: The total number of low frequency modes with non-zero
+        eigen values to be used for calculations
+    Returns:
+        df_contact_breaks: A dataframe including information on the contacts broken
     """
     pdb_id = pdb_i
     pdb_id.replace('.pdb', '') # Just the pdb id for naming purpose
@@ -487,9 +600,21 @@ def calc_mut_energy_folded_unfolded(processed_pdb_dir, pdb_i, wt_res, mut_res, r
     return df_contact_breaks
 
 def calc_wt_energy_folded_unfolded(processed_pdb_dir, pdb_i, dist_cutoff, num_modes):
-    """
-    Calculate the energy of the wild-type structure in the folded and 
-    partially unfolded states
+    """ 
+    Calculate the interaction energies in the folded and unfolded wildtype structure.
+    
+    Parameters:
+        processed_pdb_dir: The directory having the processed PDB files
+        
+        pdb_i: The four-letterd PDB ID plus the chain ID
+        dist_cutoff: Cutoff distance between residue C-alpha atoms that defines
+        the interactions between residues
+        
+        num_modes: The total number of low frequency modes with non-zero
+        eigen values to be used for calculations
+    Returns:
+        df_contact_breaks: A dataframe including information on the contacts broken
+    
     """
     pdb_id = pdb_i
     pdb_id = pdb_id.replace('.pdb', '') # Just the pdb id for naming purpose
@@ -512,8 +637,20 @@ def calc_wt_energy_folded_unfolded(processed_pdb_dir, pdb_i, dist_cutoff, num_mo
     return df_contact_breaks
 
 def run_ab_initio_stability_prediction_wildtype(pdb_i, outdir, processed_pdb_dir, dist_cutoff, num_modes):
-    """
-    Run calculations first for all the wild-types
+    """ 
+    Wrapper function for running calculations on wildtype proteins and write the 
+    contact break information into a .csv file.
+    
+    Parameters:
+        pdb_i: The four lettered PDB ID plus the chain
+        outdir: The directory to which the files will be written to
+        processed_pdb_dir: The directory having the processed PDB files
+        
+        dist_cutoff: Cutoff distance between residue C-alpha atoms that defines
+        the interactions between residues
+        
+        num_modes: The total number of low frequency modes with non-zero
+        eigen values to be used for calculations
     """
     outfile = pdb_i + '_wt_contact_breaks.csv'
     
@@ -531,8 +668,19 @@ def run_ab_initio_stability_prediction_wildtype(pdb_i, outdir, processed_pdb_dir
     df_contact_breaks_wt.to_csv(outdir + outfile, index=False)
 
 def run_ab_initio_stability_prediction_mutant(row_i, outdir, processed_pdb_dir, dist_cutoff, num_modes):
-    """
-    Run calculations for the mutant position
+    """ 
+    Wrapper function for running calculations on mutant
+    
+    Parameters:
+        row_i: The ith row as given in the benchmark .csv datafile
+        outdir: The directory to which the files will be written to
+        processed_pdb_dir: The directory having the processed PDB files
+        
+        dist_cutoff: Cutoff distance between residue C-alpha atoms that defines
+        the interactions between residues
+        
+        num_modes: The total number of low frequency modes with non-zero
+        eigen values to be used for calculations
     """
     pdb_i, wt_res, mut_res, res_num_pdb, mut_category = row_i['PDB_CHAIN'], row_i['WILD_RES'], row_i['MUTANT_RES'], row_i['RES_NUM_PDB'], row_i['Category']
 
@@ -583,7 +731,14 @@ for interactions in GNM', show_default=True)
 of modes to be used', show_default=True)
 
 def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pdb_dir, num_jobs, dist_cutoff, num_modes):
-    # Wrapper function that parallely performs calculations for each wildtype-mutant pair
+    # Wrapper function that parallely performs calculations for each 
+    # First perform a sanity check on the mutant csv file- check how many records correctly
+    # correspond to the residue position and whether the sequence included in the
+    # mutant_csv_file has the specified residue at that particular position.
+
+    # Input paramter definitions are same as described for the command-line arguments.
+
+    # Writes the PSP-GNM-calculated ddG into outfile
     df_data = pd.read_csv(data_file)
     
     if not os.path.isdir(wt_pdb_dir):
