@@ -1,5 +1,5 @@
 
-# Protein Stability Prediction with a Gaussian Network Model (PSP-GNM)
+# Protein Stability Prediction with a Gaussian Network Model <br> (PSP-GNM)
 
 
 <!-- TABLE OF CONTENTS -->
@@ -30,7 +30,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
+Protein stability prediction upon point mutation is a key biological problem. Single point mutations can alter protein function resulting in disease incidence. A very significant example is that of sickle cell anemia, wherein a single genomic mutation results in a single amino acid change and impairs the function of hemoglobin. It is therefore essential to develop methods that can predict the impact of point mutations on protein stability. More specifically, such methods should enable the estimation of free energy change (ddG) upon point mutation and be able to tell us whether a mutation reduces, increases or doesn't change the thermodynamic stability of proteins. 
 
 ### Built With
 
