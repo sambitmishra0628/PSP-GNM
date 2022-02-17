@@ -16,7 +16,6 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
@@ -89,26 +88,28 @@ Options:
 ### Prerequisites
 You will need access to a Linux machine (or a MacOS or Windows 10 with Windows Subsystem for Linux enabled). You will need to have conda installed.
 
-### Installation
-
-1. Clone the repo
-   ```sh
-   git clone https://github.com/sambitmishra0628/repo_name.git
-   ```
-2. Install NPM packages
-   ```sh
-   npm install
-   ```
-
-
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+There are primarily 2 scripts included in the `scripts/` directory:
+- `scripts/psp_gnm_benchmark_data.py`
+- `scripts/psp_gnm.py`
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+`psp_gnm_benchmark_data.py` is written to be run on the benchmark data (`datasets/`)
+`psp_gnm.py` is the generic version that is written to be run on any generic data
 
+An example run using the benchmark data is given below. Make sure that your current working directory is the `PSP_GNM` folder having the `scripts` directory.
+
+```
+python psp_gnm_benchmark_data.py --datafile test_data/S350_test_benchmark_run --outdir S350_test_run_output --outfile S350_test_benchmark_run_out.csv --wt_pdb_dir test_data/pdb_test --num_jobs 4 --dist_cutoff 9 --num_modes 10
+```
+In the above:
+  `num_jobs` should be the number of cores in your machine minus 1
+
+This run will create an output directory `S350_test_run_output` and store all the intermediate files containing information on the contacts broken during partial unfolding.
+
+It will then create S350_test_benchmark_run_out.csv containing the calculated ddG values.
 
 
 
@@ -122,9 +123,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email
+Sambit Mishra - sambit.mishra@nih.gov
 
-Project Link: [https://github.com/sambitmishra0628/repo_name](https://github.com/sambitmishra0628/repo_name)
+Project Link: [PSP-GNM](https://github.com/sambitmishra0628/PSP-GNM)
 
 
 
