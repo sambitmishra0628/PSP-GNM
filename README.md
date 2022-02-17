@@ -21,7 +21,6 @@
     <li><a href="#usage">Usage</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
 
@@ -126,17 +125,5 @@ Distributed under the MIT License. See `LICENSE` for more information.
 Sambit Mishra - sambit.mishra@nih.gov
 
 Project Link: [PSP-GNM](https://github.com/sambitmishra0628/PSP-GNM)
-
-
-
-<!-- ACKNOWLEDGEMENTS -->
-## Acknowledgements
-
-* []()
-* []()
-* []()
-
-
-
 
 
