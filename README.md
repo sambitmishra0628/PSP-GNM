@@ -34,9 +34,11 @@ Protein stability prediction upon point mutation is a key biological problem. Si
 
 ### Built With
 
-* [Python3.8]()
-* []()
-* []()
+* [Python3.8](https://www.python.org/downloads/release/python-380/)
+* [scikit-learn=1.0.1](https://scikit-learn.org/stable/whats_new/v1.0.html#version-1-0-1)
+* [scipy=1.7.2](https://scipy.github.io/devdocs/release.1.7.2.html)
+* [statsmodels=0.13.1](https://www.statsmodels.org/stable/release/version0.13.1.html)
+* [biopython=1.79](https://biopython.org/docs/1.79/api/Bio.html)
 
 
 
