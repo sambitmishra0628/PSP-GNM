@@ -50,6 +50,14 @@ Protein stability prediction upon point mutation is a key biological problem. Si
 You will need access to a Linux machine (or a MacOS or Windows 10 with Windows Subsystem for Linux enabled). The specific instructions below work best in a Linux (Ubuntu 18.02/Ubuntu20.04) platform
 
 To get a local copy up and running follow these simple steps:
+- Install miniconda: 
+
+```
+wget https://repo.anaconda.com/miniconda/Miniconda3-py38_4.11.0-Linux-x86_64.sh
+chmod +x Miniconda3-latest-Linux-x86_64.sh
+./Miniconda3-latest-Linux-x86_64.sh
+```
+
 - Clone the repository with `git clone https://github.com/sambitmishra0628/PSP-GNM`
 - On a terminal window, go to the PSP-GNM directory
 - Create the conda environment using the provided yaml file: `conda env create -f psp_gnm_env.yaml` 
@@ -79,7 +87,7 @@ Options:
 ```
 
 ### Prerequisites
-You will need access to a Linux machine (or a MacOS or Windows 10 with Windows Subsystem for Linux enabled). The specific instructions below work best in a Linux (Ubuntu 18.02/Ubuntu20.04) platform
+You will need access to a Linux machine (or a MacOS or Windows 10 with Windows Subsystem for Linux enabled). You will need to have conda installed.
 
 ### Installation
 
