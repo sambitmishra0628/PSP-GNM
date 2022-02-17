@@ -1,5 +1,5 @@
 
-# Project Title
+# Protein Stability Prediction with a Gaussian Network Model (PSP-GNM)
 
 
 <!-- TABLE OF CONTENTS -->
