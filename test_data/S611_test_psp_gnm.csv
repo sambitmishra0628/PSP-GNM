@@ -1,0 +1,17 @@
+PDB_CHAIN,WILD_RES,RES_NUM_PDB,MUTANT_RES,Category
+1AJ3A,H,10,A,Forward
+1AJ3A,I,23,A,Forward
+1AJ3A,E,25,A,Forward
+1AJ3A,K,26,A,Forward
+1AJ3A,L,98,A,Forward
+1AKYA,Q,48,E,Forward
+1AONU,I,48,W,Forward
+1APSA,I,75,V,Forward
+1AJ3A,A,10,H,Reverse
+1AJ3A,A,25,E,Reverse
+1AJ3A,A,26,K,Reverse
+1AKYA,E,48,Q,Reverse
+1AONU,W,48,I,Reverse
+1APSA,V,75,I,Reverse
+1BNIA,A,27,K,Reverse
+1BNIA,A,59,R,Reverse
