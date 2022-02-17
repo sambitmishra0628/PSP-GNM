@@ -122,7 +122,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Sambit Mishra - sambit.mishra@nih.gov
+Sambit Mishra - sambitmishra0628@gmail.com
 
 Project Link: [PSP-GNM](https://github.com/sambitmishra0628/PSP-GNM)
 
