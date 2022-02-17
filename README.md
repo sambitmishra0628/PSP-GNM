@@ -54,7 +54,29 @@ To get a local copy up and running follow these simple steps:
 - On a terminal window, go to the PSP-GNM directory
 - Create the conda environment using the provided yaml file: `conda env create -f psp_gnm_env.yaml` 
 - Activate the environment: conda activate psp_gnm
-- Checkout the command line arguments needed to run psp_gnm: python scripts/psp_gnm.py --help
+- Checkout the command line arguments needed to run psp_gnm: `python scripts/psp_gnm.py --help`
+
+The following help manual should be displayed
+
+```
+Usage: psp_gnm.py [OPTIONS]
+
+Options:
+  --data_file TEXT    Name of the .csv file containing the information on ddG
+                      for the mutants  [required]
+  --outfile TEXT      Name of the file to     which the PSP-GNM-calculated
+                      energies and experimental energies will be written
+                      [required]
+  --outdir TEXT       Name of the directory to     which the intermittent
+                      result files will be written to  [required]
+  --wt_pdb_dir TEXT   Directory containing the wild type atomic pdb files
+                      [required]
+  --num_jobs TEXT     Maximum number of jobs to be run in parallel  [required]
+  --dist_cutoff TEXT  Distance cutoff for interactions in GNM  [default: 9;
+                      required]
+  --num_modes TEXT    Number of modes to be used  [default: 10; required]
+  --help              Show this message and exit.
+```
 
 ### Prerequisites
 You will need access to a Linux machine (or a MacOS or Windows 10 with Windows Subsystem for Linux enabled). The specific instructions below work best in a Linux (Ubuntu 18.02/Ubuntu20.04) platform
