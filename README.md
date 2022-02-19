@@ -141,17 +141,17 @@ Options:
   --help              Show this message and exit.
 ```
 
-An example run using the benchmark data is given below. Make sure that your current working directory is the `PSP_GNM` folder having the `scripts` directory.
+An example run using the benchmark data is shown below. Make sure that your current working directory is the `PSP_GNM` folder having the `scripts` directory.
 
 ```
-python psp_gnm_benchmark_data.py --datafile test_data/S350_test_benchmark_run --outdir S350_test_run_output --outfile S350_test_benchmark_run_out.csv --wt_pdb_dir test_data/pdb_test --num_jobs 4 --dist_cutoff 9 --num_modes 10
+python psp_gnm_benchmark_data.py --datafile test_data/S350_test_benchmark_run.csv --outdir S350_test_run_output --outfile S350_test_benchmark_run_out.csv --wt_pdb_dir test_data/pdb_test --num_jobs 4 --dist_cutoff 9 --num_modes 10
 ```
 
 In the above:
   `num_jobs` is the number of parallel jobs you intend to run. Ideally, it should be set to the number of cores in your machine (N) - 1. This run will create an output directory `S350_test_run_output` and store all the intermediate files containing information on the contacts broken during partial unfolding. It will then create S350_test_benchmark_run_out.csv containing the calculated ddG values.
 
 ### 2. `scripts/psp_gnm.py`
-`psp_gnm.py` is a more generic version that is written to be run on any generic data. The usage of this script is described below.
+`psp_gnm.py` is a more generic version that is written to be run on any generic data. The usage of this script is shown below.
 
 ```
 Usage: psp_gnm.py [OPTIONS]
@@ -174,8 +174,11 @@ Options:
 
 ```
 
-The data_file is the input file containing information about about the mutations for which ΔΔG is to be estimated.
+The data_file is the input file containing information about about the mutations for which ΔΔG is to be estimated. An example run can be performed using the test data file provided as shown below.
 
+```
+python psp_gnm.py --datafile test_data/S611_test_psp_gnm.csv--outdir S611_psp_gnm_test_run_output --outfile S611_psp_gnm_test_run_out.csv --wt_pdb_dir test_data/pdb_test --num_jobs 4 --dist_cutoff 9 --num_modes 10
+```
 
 
 
