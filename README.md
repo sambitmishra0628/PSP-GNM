@@ -13,7 +13,9 @@
       </ul>
     </li>
     <li>
-      <a href="#Repository-Contents">Repository-Contents</a> 
+      <a href="#Repository-Contents">Repository Contents</a>
+    </li>
+    <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
