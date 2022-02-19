@@ -46,8 +46,19 @@ In this project, we introduce a novel approach to estimate the changes in free e
 * [numpy=1.21.4](https://numpy.org/devdocs/release/1.21.4-notes.html)
 * [seaborn=0.11.2](https://seaborn.pydata.org/installing.html)
 
-## Repository Contents
 
+<!-- REPOSITORY CONTENTS -->
+## Repository Contents
+The repository includes 4 directories containing the relevant datasets and scripts for running PSP-GNM. It also includes a conda environment file (psp_gnm_env.yaml) that can be used to re-create the environment where the scripts can be run.
+
+<ol>
+  
+  <li><b>datasets/</b> - Contains the <b>3 benchmark datasets</b> on which PSP-GNM was assessed.</li>
+  <li><b>predictions/</b> - Contains predictions made using different methods and PSP-GNM for different datasets </li>
+  <li><b>scripts/</b> - Includes 2 scripts: <b>psp_gnm.py</b> and <b>psp_gnm_benchmark_data.py</b> to be run on independent data and on the benchmark data, respectively </li>
+  <li><b>test_data/ </b> - Includes test datasets to perform a test run of the 2 scripts </li>
+  
+</ol>
 
 <!-- GETTING STARTED -->
 ## Getting Started
