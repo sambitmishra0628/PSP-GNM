@@ -13,6 +13,7 @@
       </ul>
     </li>
     <li>
+      <a href="#Repository-Contents">Repository-Contents</a> 
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
@@ -28,7 +29,9 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-Protein stability prediction upon point mutation is a key biological problem. Single point mutations can alter protein function resulting in disease incidence. A very significant example is that of sickle cell anemia, wherein a single genomic mutation results in a single amino acid change and impairs the function of hemoglobin. It is therefore essential to develop methods that can predict the impact of point mutations on protein stability. More specifically, such methods should enable the estimation of free energy change (ddG) upon point mutation and be able to tell us whether a mutation reduces, increases or doesn't change the thermodynamic stability of proteins. 
+Protein stability prediction upon point mutation is a key biological problem. Single point mutations can alter protein function resulting in disease incidence. A very significant example is that of sickle cell anemia, wherein a single genomic mutation results in a single amino acid change and impairs the function of hemoglobin. It is therefore essential to develop methods that can predict the impact of point mutations on protein stability. More specifically, such methods should enable the estimation of free energy change (ddG) upon point mutation and be able to tell us whether a mutation reduces, increases or doesn't change the thermodynamic stability of proteins.
+
+In this project, we introduce a novel approach to estimate the changes in free energy (ΔΔG) associated with point mutations. We refer to our approach as Protein Stability Prediction using Gaussian Network Model (PSP-GNM). For a given wildtype-mutant pair, PSP-GNM utilizes the Gaussian Network Model (GNM) to identify putative contacts and the order in which they are broken during simulated partial protein unfolding. We then use the knowledge of these broken contacts to estimate the ΔΔG.  
 
 ### Built With
 
@@ -41,10 +44,15 @@ Protein stability prediction upon point mutation is a key biological problem. Si
 * [numpy=1.21.4](https://numpy.org/devdocs/release/1.21.4-notes.html)
 * [seaborn=0.11.2](https://seaborn.pydata.org/installing.html)
 
+<!-- REPOSITORY CONTENTS -->
+## Repository Contents
 
 
 <!-- GETTING STARTED -->
 ## Getting Started
+
+
+
 You will need access to a Linux machine (or a MacOS or Windows 10 with Windows Subsystem for Linux enabled). The specific instructions below work best in a Linux (Ubuntu 18.02/Ubuntu20.04) platform
 
 To get a local copy up and running follow these simple steps:
@@ -154,6 +162,7 @@ Options:
 
 ```
 
+The data_file is the input file containing information about about the mutations for which ΔΔG is to be estimated.
 
 
 
