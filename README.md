@@ -13,16 +13,17 @@
       </ul>
     </li>
     <li>
+      <a href="#Repository-Contents">Repository Contents</a>
+    </li>
+    <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
 
@@ -30,7 +31,9 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-Protein stability prediction upon point mutation is a key biological problem. Single point mutations can alter protein function resulting in disease incidence. A very significant example is that of sickle cell anemia, wherein a single genomic mutation results in a single amino acid change and impairs the function of hemoglobin. It is therefore essential to develop methods that can predict the impact of point mutations on protein stability. More specifically, such methods should enable the estimation of free energy change (ddG) upon point mutation and be able to tell us whether a mutation reduces, increases or doesn't change the thermodynamic stability of proteins. 
+Protein stability prediction upon point mutation is a key biological problem. Single point mutations can alter protein function resulting in disease incidence. A very significant example is that of sickle cell anemia, wherein a single genomic mutation results in a single amino acid change and impairs the function of hemoglobin. It is therefore essential to develop methods that can predict the impact of point mutations on protein stability. More specifically, such methods should enable the estimation of free energy change (ddG) upon point mutation and be able to tell us whether a mutation reduces, increases or doesn't change the thermodynamic stability of proteins.
+
+In this project, we introduce a novel approach to estimate the changes in free energy (ΔΔG) associated with point mutations. We refer to our approach as Protein Stability Prediction using Gaussian Network Model (PSP-GNM). For a given wildtype-mutant pair, PSP-GNM utilizes the Gaussian Network Model (GNM) to identify putative contacts and the order in which they are broken during simulated partial protein unfolding. We then use the knowledge of these broken contacts to estimate the ΔΔG.  
 
 ### Built With
 
@@ -43,11 +46,15 @@ Protein stability prediction upon point mutation is a key biological problem. Si
 * [numpy=1.21.4](https://numpy.org/devdocs/release/1.21.4-notes.html)
 * [seaborn=0.11.2](https://seaborn.pydata.org/installing.html)
 
+## Repository Contents
 
 
 <!-- GETTING STARTED -->
 ## Getting Started
-You will need access to a Linux machine (or a MacOS or Windows 10 with Windows Subsystem for Linux enabled). The specific instructions below work best in a Linux (Ubuntu 18.02/Ubuntu20.04) platform
+
+
+
+You will need access to a Linux machine (or a MacOS, or evan a Windows 10 having Windows Subsystem for Linux enabled and Ubuntu installed). The specific instructions below work best in a Linux (Ubuntu 18.02/Ubuntu20.04) platform.
 
 To get a local copy up and running follow these simple steps:
 - Install miniconda: 
@@ -89,25 +96,74 @@ Options:
 ### Prerequisites
 You will need access to a Linux machine (or a MacOS or Windows 10 with Windows Subsystem for Linux enabled). You will need to have conda installed.
 
-### Installation
-
-1. Clone the repo
-   ```sh
-   git clone https://github.com/sambitmishra0628/repo_name.git
-   ```
-2. Install NPM packages
-   ```sh
-   npm install
-   ```
-
-
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+There are two scripts included in the `scripts/` directory:
+1. `scripts/psp_gnm_benchmark_data.py`
+2. `scripts/psp_gnm.py`
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+The purpose and usage of each script is described as follows.
+
+### 1. `scripts/psp_gnm_benchmark_data.py`
+
+`psp_gnm_benchmark_data.py` is written to be run on the benchmark data (`datasets/`). The options available to run this script are outlined below.
+
+```
+Usage: psp_gnm_benchmark_data.py [OPTIONS]
+
+Options:
+  --data_file TEXT    Name of the .csv file containing the information on ddG
+                      for the mutants  [required]
+  --outfile TEXT      Name of the file to     which the PSP-GNM-calculated
+                      energies and experimental energies will be written
+                      [required]
+  --outdir TEXT       Name of the directory to     which the intermittent
+                      result files will be written to  [required]
+  --wt_pdb_dir TEXT   Directory containing the wild type atomic pdb files
+                      [required]
+  --num_jobs TEXT     Maximum number of jobs to be run in parallel  [required]
+  --dist_cutoff TEXT  Distance cutoff for interactions in GNM  [default: 9;
+                      required]
+  --num_modes TEXT    Number of modes to be used  [default: 10; required]
+  --help              Show this message and exit.
+```
+
+An example run using the benchmark data is given below. Make sure that your current working directory is the `PSP_GNM` folder having the `scripts` directory.
+
+```
+python psp_gnm_benchmark_data.py --datafile test_data/S350_test_benchmark_run --outdir S350_test_run_output --outfile S350_test_benchmark_run_out.csv --wt_pdb_dir test_data/pdb_test --num_jobs 4 --dist_cutoff 9 --num_modes 10
+```
+
+In the above:
+  `num_jobs` is the number of parallel jobs you intend to run. Ideally, it should be set to the number of cores in your machine (N) - 1. This run will create an output directory `S350_test_run_output` and store all the intermediate files containing information on the contacts broken during partial unfolding. It will then create S350_test_benchmark_run_out.csv containing the calculated ddG values.
+
+### 2. `scripts/psp_gnm.py`
+`psp_gnm.py` is a more generic version that is written to be run on any generic data. The usage of this script is described below.
+
+```
+Usage: psp_gnm.py [OPTIONS]
+
+Options:
+  --data_file TEXT    Name of the .csv file containing the information on ddG
+                      for the mutants  [required]
+  --outfile TEXT      Name of the file to     which the PSP-GNM-calculated
+                      energies and experimental energies will be written
+                      [required]
+  --outdir TEXT       Name of the directory to     which the intermittent
+                      result files will be written to  [required]
+  --wt_pdb_dir TEXT   Directory containing the wild type atomic pdb files
+                      [required]
+  --num_jobs TEXT     Maximum number of jobs to be run in parallel  [required]
+  --dist_cutoff TEXT  Distance cutoff for interactions in GNM  [default: 9;
+                      required]
+  --num_modes TEXT    Number of modes to be used  [default: 10; required]
+  --help              Show this message and exit.
+
+```
+
+The data_file is the input file containing information about about the mutations for which ΔΔG is to be estimated.
 
 
 
@@ -122,20 +178,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email
+Sambit Mishra - sambitmishra0628@gmail.com
 
-Project Link: [https://github.com/sambitmishra0628/repo_name](https://github.com/sambitmishra0628/repo_name)
-
-
-
-<!-- ACKNOWLEDGEMENTS -->
-## Acknowledgements
-
-* []()
-* []()
-* []()
-
-
-
+Project Link: [PSP-GNM](https://github.com/sambitmishra0628/PSP-GNM)
 
 
