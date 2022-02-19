@@ -24,6 +24,7 @@
     <li><a href="#usage">Usage</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
+    <li><a href="#Citation">Citation</a></li>
   </ol>
 </details>
 
@@ -196,4 +197,7 @@ Sambit Mishra - sambitmishra0628@gmail.com
 
 Project Link: [PSP-GNM](https://github.com/sambitmishra0628/PSP-GNM)
 
+<!-- CITATION -->
+## Citation
+This work has been submitted to a peer-review journal and is currently under review. For the time being, please cite our pre-print on BioRxiv (https://www.biorxiv.org/content/10.1101/2022.02.17.480818v1).
 
