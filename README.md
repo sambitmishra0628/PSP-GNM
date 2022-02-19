@@ -46,7 +46,6 @@ In this project, we introduce a novel approach to estimate the changes in free e
 * [numpy=1.21.4](https://numpy.org/devdocs/release/1.21.4-notes.html)
 * [seaborn=0.11.2](https://seaborn.pydata.org/installing.html)
 
-<!-- REPOSITORY CONTENTS -->
 ## Repository Contents
 
 
@@ -55,7 +54,7 @@ In this project, we introduce a novel approach to estimate the changes in free e
 
 
 
-You will need access to a Linux machine (or a MacOS or Windows 10 with Windows Subsystem for Linux enabled). The specific instructions below work best in a Linux (Ubuntu 18.02/Ubuntu20.04) platform
+You will need access to a Linux machine (or a MacOS, or evan a Windows 10 having Windows Subsystem for Linux enabled and Ubuntu installed). The specific instructions below work best in a Linux (Ubuntu 18.02/Ubuntu20.04) platform.
 
 To get a local copy up and running follow these simple steps:
 - Install miniconda: 
