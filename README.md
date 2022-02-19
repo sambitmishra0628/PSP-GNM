@@ -91,24 +91,70 @@ You will need access to a Linux machine (or a MacOS or Windows 10 with Windows S
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-There are primarily 2 scripts included in the `scripts/` directory:
-- `scripts/psp_gnm_benchmark_data.py`
-- `scripts/psp_gnm.py`
+There are two scripts included in the `scripts/` directory:
+1. `scripts/psp_gnm_benchmark_data.py`
+2. `scripts/psp_gnm.py`
 
-`psp_gnm_benchmark_data.py` is written to be run on the benchmark data (`datasets/`)
-`psp_gnm.py` is the generic version that is written to be run on any generic data
+The purpose and usage of each script is described as follows.
+
+### 1. `scripts/psp_gnm_benchmark_data.py`
+
+`psp_gnm_benchmark_data.py` is written to be run on the benchmark data (`datasets/`). The options available to run this script are outlined below.
+
+```
+Usage: psp_gnm_benchmark_data.py [OPTIONS]
+
+Options:
+  --data_file TEXT    Name of the .csv file containing the information on ddG
+                      for the mutants  [required]
+  --outfile TEXT      Name of the file to     which the PSP-GNM-calculated
+                      energies and experimental energies will be written
+                      [required]
+  --outdir TEXT       Name of the directory to     which the intermittent
+                      result files will be written to  [required]
+  --wt_pdb_dir TEXT   Directory containing the wild type atomic pdb files
+                      [required]
+  --num_jobs TEXT     Maximum number of jobs to be run in parallel  [required]
+  --dist_cutoff TEXT  Distance cutoff for interactions in GNM  [default: 9;
+                      required]
+  --num_modes TEXT    Number of modes to be used  [default: 10; required]
+  --help              Show this message and exit.
+```
 
 An example run using the benchmark data is given below. Make sure that your current working directory is the `PSP_GNM` folder having the `scripts` directory.
 
 ```
 python psp_gnm_benchmark_data.py --datafile test_data/S350_test_benchmark_run --outdir S350_test_run_output --outfile S350_test_benchmark_run_out.csv --wt_pdb_dir test_data/pdb_test --num_jobs 4 --dist_cutoff 9 --num_modes 10
 ```
+
 In the above:
-  `num_jobs` should be the number of cores in your machine minus 1
+  `num_jobs` is the number of parallel jobs you intend to run. Ideally, it should be set to the number of cores in your machine (N) - 1. This run will create an output directory `S350_test_run_output` and store all the intermediate files containing information on the contacts broken during partial unfolding. It will then create S350_test_benchmark_run_out.csv containing the calculated ddG values.
 
-This run will create an output directory `S350_test_run_output` and store all the intermediate files containing information on the contacts broken during partial unfolding.
+### 2. `scripts/psp_gnm.py`
+`psp_gnm.py` is a more generic version that is written to be run on any generic data. The usage of this script is described below.
 
-It will then create S350_test_benchmark_run_out.csv containing the calculated ddG values.
+```
+Usage: psp_gnm.py [OPTIONS]
+
+Options:
+  --data_file TEXT    Name of the .csv file containing the information on ddG
+                      for the mutants  [required]
+  --outfile TEXT      Name of the file to     which the PSP-GNM-calculated
+                      energies and experimental energies will be written
+                      [required]
+  --outdir TEXT       Name of the directory to     which the intermittent
+                      result files will be written to  [required]
+  --wt_pdb_dir TEXT   Directory containing the wild type atomic pdb files
+                      [required]
+  --num_jobs TEXT     Maximum number of jobs to be run in parallel  [required]
+  --dist_cutoff TEXT  Distance cutoff for interactions in GNM  [default: 9;
+                      required]
+  --num_modes TEXT    Number of modes to be used  [default: 10; required]
+  --help              Show this message and exit.
+
+```
+
+
 
 
 
