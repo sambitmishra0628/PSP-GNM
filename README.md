@@ -66,9 +66,9 @@ The repository includes 4 directories containing the relevant datasets and scrip
 
 
 
-You will need access to a Linux machine (or a MacOS, or evan a Windows 10 having Windows Subsystem for Linux enabled and Ubuntu installed). The specific instructions below work best in a Linux (Ubuntu 18.02/Ubuntu20.04) platform.
+You will need access to a Linux machine (or a MacOS, or even a Windows 10 having Windows Subsystem for Linux enabled and Ubuntu installed). The specific instructions below work best in a Linux (Ubuntu 18.02/Ubuntu20.04) platform.
 
-To get a local copy up and running follow these simple steps:
+To get a local copy up and start executing the scripts follow these simple steps:
 - Install miniconda: 
 
 ```
