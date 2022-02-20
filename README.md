@@ -66,9 +66,9 @@ The repository includes 4 directories containing the relevant datasets and scrip
 
 
 
-You will need access to a Linux machine (or a MacOS, or even a Windows 10 having Windows Subsystem for Linux enabled and Ubuntu installed). The specific instructions below work best in a Linux (Ubuntu 18.02/Ubuntu20.04) platform.
+You will need access to a Linux terminal (or a MacOS, or even a Windows 10 having Windows Subsystem for Linux enabled and Ubuntu installed). The specific instructions below work best in a Linux (Ubuntu 18.02/Ubuntu20.04) platform.
 
-To get a local copy up and start executing the scripts follow these simple steps:
+To get a local copy up and execute the scripts, follow these simple steps:
 - Install miniconda: 
 
 ```
@@ -199,5 +199,5 @@ Project Link: [PSP-GNM](https://github.com/sambitmishra0628/PSP-GNM)
 
 <!-- CITATION -->
 ## Citation
-This work has been submitted to a peer-review journal and is currently under review. For the time being, please cite our pre-print on BioRxiv (https://www.biorxiv.org/content/10.1101/2022.02.17.480818v1).
+This work has been submitted to a peer-review journal and is currently under review. Please refer to the preprint on BioRxiv (https://www.biorxiv.org/content/10.1101/2022.02.17.480818v2).
 
