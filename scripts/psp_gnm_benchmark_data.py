@@ -50,7 +50,8 @@ def map_resname_to_id(res_code):
                     'THR' : 'T', 'TRP' : 'W', 'TYR' : 'Y', 'VAL' : 'V',}
     return resname_2_id[res_code]
 
-def process_wt_pdb (input_dir, output_dir):
+
+def process_wt_pdb (input_dir, output_dir, pdb_chain_list):
     """
     Process the atomic PDB structures
     
@@ -58,6 +59,8 @@ def process_wt_pdb (input_dir, output_dir):
         input_dir: Directory containing the raw PDB files
 
         output_dir: Directory to which the processed files will be written into
+        
+        pdb_chain_list: List of 4 letter PDBID and Chain ID as a single string 
     """
 
     if not input_dir.endswith('/'):
@@ -66,43 +69,97 @@ def process_wt_pdb (input_dir, output_dir):
         output_dir = output_dir + '/'
     if not os.path.isdir(output_dir):
         os.mkdir(output_dir)
-    pdbfiles = glob.glob(input_dir + '*.pdb')
-    if len(pdbfiles) == len(glob.glob(output_dir + '*.pdb')):
+        
+    not_found_list = [] # PDB_CHAIN entries that do not have PDB files in the input_dir    
+    pdbfiles = glob.glob(input_dir + '*.pdb') # List of pdb files in the input directory
+    
+    if len(pdbfiles) == 0:
+        sys.exit(f"Error! No *.pdb files found in {input_dir}")
+        
+    # Check if the names of the PDB files in the input directory include any chain information.
+    pdb_id_lens = [len(pdb_i.split('/')[-1].split('.pdb')[0]) for pdb_i in pdbfiles]
+    
+    # If all pdb files have ids that are of length 4, then no chain
+    # ID is included in the file name
+    if len(set(pdb_id_lens)) == 1 and list(set(pdb_id_lens))[0] == 4:
+        chain_flag = False
+    elif len(set(pdb_id_lens)) == 1 and list(set(pdb_id_lens))[0] == 5:
+        print ("PDB file names have length 5! Assuming the 5th alphabet is the chain ID!")
+        chain_flag = True
+    else:
+        print (f"Error! Inconsitent PDB filenames! PDB file names (.pdb extension excluded) in {input_dir} "
+               "should either have only the PDB ID (e.g., 1cei) or PDB ID with chain (e.g., 1ceiA). Acceptable "
+               "formats include 1cei.pdb, 1CEI.pdb, 1ceiA.pdb or 1CEIA.pdb. All files should have the same naming format.")
+        sys.exit()
+        
+    
+    # We can expect more pdb files in the output directory compared 
+    # to the input directory - separate pdb files for each chain
+    if len(glob.glob(output_dir + '*.pdb')) >= len(pdbfiles): 
         print (f"Processed pdb files already present at {output_dir}! Nothing to do!")
         return
-    total_files = len(pdbfiles)
-    count = 0    
-    for pdbfile in pdbfiles:
-        if not re.match('.*?\.pdb$', pdbfile):
-            continue
+    total_files = len(pdb_chain_list)
+    count = 0
+    # print (f"Chain flag = {chain_flag}")
+    # print (f"{pdbfiles}")
+    for pdb_i in pdb_chain_list:
+        # The pdb ids present in the input dir may differ from
+        # those in the pdb_chain_list by their case. Consider such differences.
+        if input_dir + pdb_i[0:4].upper() + '.pdb' in pdbfiles and chain_flag == False:
+            pdbfile = input_dir +  pdb_i[0:4].upper() +  '.pdb'
+        elif input_dir + pdb_i[0:4].lower() + '.pdb' in pdbfiles and chain_flag == False:
+            pdbfile = input_dir +  pdb_i[0:4].lower() +  '.pdb'
+        elif input_dir + pdb_i[0:5].upper() + '.pdb' in pdbfiles and chain_flag == True:
+            pdbfile = input_dir +  pdb_i[0:5].upper() +  '.pdb'
+        elif input_dir + pdb_i[0:5].lower() + '.pdb' in pdbfiles and chain_flag == True:
+            pdbfile = input_dir +  pdb_i[0:5].lower() + '.pdb' 
         else:
-            pdb_name = pdbfile.split('/')[-1]
-            outfile = output_dir + pdb_name
-            # print (f"pdb_name = {pdb_name}, outfile = {outfile}")
-            # return
-            fh1 = open(pdbfile, 'r')
-            fh2 = open(outfile, 'w')
-            # print("Processing file ", pdbfile)
-            for line in fh1:
-                if re.match('^ATOM', line):
-                    alt_loc = line[16] # alternate location if any
-                    alt_loc = alt_loc.replace(' ','')
-                    if alt_loc == 'A': # we will consider by default the 'A' location
-                        fh2.write(line)
-                    elif alt_loc == '':
-                        fh2.write(line)
-                    else:
-                        continue						
-                elif re.match('^TER', line):
+            not_found_list.append(pdb_i[0:4] +  '.pdb')
+            continue
+
+        pdb_name = pdb_i
+        chain_id = pdb_i[4]
+        outfile = output_dir + pdb_name + '.pdb'
+        # print (f"pdb_name = {pdb_name}, outfile = {outfile}")
+        # return
+        fh1 = open(pdbfile, 'r')
+        fh2 = open(outfile, 'w')
+        # print("Processing file ", pdbfile)
+        is_nmr = False
+        for line in fh1:
+            if line.startswith('EXPDTA') and 'NMR' in line:
+                is_nmr = True
+                continue
+            elif line.startswith('MODEL'):
+                # By default we will use the first model
+                is_nmr = True
+                model_num = int(line.split()[1])
+                fh2.write(line)
+                continue
+            elif re.match('^ATOM', line) and line[21] == chain_id: # Only get coordinates for the given chain ID
+                alt_loc = line[16] # alternate location if any
+                alt_loc = alt_loc.replace(' ','')
+                if alt_loc == 'A': # we will consider by default the 'A' location
+                    fh2.write(line)
+                elif alt_loc == '':
                     fh2.write(line)
                 else:
-                    continue
-            fh1.close()
-            fh2.close()
-            # print("Done!\n")
-            count += 1
-            print (f"Processed {count}/{total_files} pdb files", end='\r', flush=True)
-
+                    continue						
+            elif re.match('^TER', line) and line[21] == chain_id:
+                fh2.write(line)
+            elif line.startswith('ENDMDL'):
+                fh2.write(line)
+                break
+        fh1.close()
+        fh2.close()
+        # print("Done!\n")
+        count += 1
+        print (f"Processed {count}/{total_files} pdb files", end='\r', flush=True)
+    print ("\nDone!")
+    
+    if len(not_found_list) > 0:
+        not_found_str = ','.join(not_found_list)
+        sys.exit(f"Error! Wildtype PDB files could not be found for {not_found_str} in {input_dir}! Cannot continue with prediction!")
 def parse_calpha_pdb (pdbfile):
     """
     Parse the coordinates of the c-alpha atoms from the given pdb file
@@ -409,7 +466,7 @@ def sanity_check(protherm_data_file):
         protherm_data_file: The benchmark data file in .csv format
 
     """
-    df = pd.read_csv(protherm_data_file)
+    df = pd.read_csv(protherm_data_file, encoding='utf8')
     total_recs = len(df)
     correct_recs = 0
     for res_i_wt, res_i_mut, category_i, pos_i, seq_i in zip(df['WILD_RES'], df['MUTANT_RES'], df['Category'], df['RES_IND_SEQ'], df['PDB_SEQUENCE']):
@@ -777,15 +834,15 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
     
     # Store the overall output here
     df_output_all = pd.DataFrame()
-
+    
+    # Parse the PDB_CHAIN column as a list
+    count = 0
+    df_protherm_data = pd.read_csv(data_file, encoding='utf8')
+    pdb_uniq = df_protherm_data['PDB_CHAIN'].unique().tolist()
+    
     # Process the raw pdb files
     processed_pdb_dir = wt_pdb_dir[:-1] + '_processed/'
-    process_wt_pdb(wt_pdb_dir, processed_pdb_dir)
-
-    # Make predictions for each mutant type
-    df_protherm_data = pd.read_csv(data_file)
-    count = 0
-    pdb_uniq = df_protherm_data['PDB_CHAIN'].unique().tolist()
+    process_wt_pdb(wt_pdb_dir, processed_pdb_dir, pdb_uniq)
 
     # First run calculations for the wild type structures 
     Parallel(n_jobs=num_jobs)(delayed(run_ab_initio_stability_prediction_wildtype)(pdb_i, outdir, processed_pdb_dir, dist_cutoff, num_modes) for pdb_i in pdb_uniq)
