@@ -142,10 +142,10 @@ Options:
   --help              Show this message and exit.
 ```
 
-An example run using the benchmark data is shown below. Make sure that your current working directory is the `PSP_GNM` folder having the `scripts` directory.
+An example run using the benchmark data is shown below. **Make sure that your current working directory is the PSP_GNM/scripts directory.**
 
 ```
-python psp_gnm_benchmark_data.py --datafile test_data/S350_test_benchmark_run.csv --outdir S350_test_run_output --outfile S350_test_benchmark_run_out.csv --wt_pdb_dir test_data/pdb_test --num_jobs 4 --dist_cutoff 9 --num_modes 10
+python psp_gnm_benchmark_data.py --data_file ../test_data/S350_test_benchmark_run.csv --outdir ../S350_test_run_output --outfile ../S350_test_benchmark_run_out.csv --wt_pdb_dir ../test_data/pdb_test --num_jobs 4 --dist_cutoff 9 --num_modes 10
 ```
 
 In the above:
@@ -175,10 +175,10 @@ Options:
 
 ```
 
-The data_file is the input file containing information about about the mutations for which ΔΔG is to be estimated. An example run can be performed using the test data file provided as shown below.
+The data_file is the input file containing information about about the mutations for which ΔΔG is to be estimated. An example run can be performed using the test data file provided as shown below. **Make sure that your current working directory is the PSP_GNM/scripts directory.**
 
 ```
-python psp_gnm.py --datafile test_data/S611_test_psp_gnm.csv--outdir S611_psp_gnm_test_run_output --outfile S611_psp_gnm_test_run_out.csv --wt_pdb_dir test_data/pdb_test --num_jobs 4 --dist_cutoff 9 --num_modes 10
+python psp_gnm.py --data_file ../test_data/S611_test_psp_gnm.csv --outdir ../S611_psp_gnm_test_run_output --outfile ../S611_psp_gnm_test_run_out.csv --wt_pdb_dir ../test_data/pdb_test --num_jobs 4 --dist_cutoff 9 --num_modes 10
 ```
 
 
