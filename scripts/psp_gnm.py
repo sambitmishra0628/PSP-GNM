@@ -863,12 +863,19 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
         try:
             df_cont_brk_wt = pd.read_csv(outdir + wt_cont_brk_file)
         except pd.errors.EmptyDataError:
-            print (f"{outdir + wt_cont_brk_file} is empty! No contacts involving mutation position broken during simulation! Skipping calculations for this file!")
+            print (f"{outdir + wt_cont_brk_file} is empty! No contacts involving mutation position broken during simulation! Will assign ddG value 0!")
+            df_output_tmp = pd.DataFrame(data=[[pdb_i, wt_res, mut_res, res_num_pdb, res_num_serial, mut_category, 0, 0, 0, 0, True]],
+                columns = ['PDB_ID', 'WT_Residue', 'Mutant_Residue', 'Res_Num_PDB', 'Res_Num_Serial', 'Category', 'Calc_ddG', 'Calc_ddI', 'Calc_ddG_mean', 'Calc_ddI_mean', 'No_contacts_broken'])
+            df_output_all = df_output_all.append(df_output_tmp)
             continue
+        
         try:        
             df_cont_brk_mut = pd.read_csv(outdir + mut_cont_brk_file)
         except pd.errors.EmptyDataError:
-            print (f"{outdir + mut_cont_brk_file} is empty! No contacts involving mutation position broken during simulation! Skipping calculations for this file!")
+            print (f"{outdir + mut_cont_brk_file} is empty! No contacts involving mutation position broken during simulation! Will assign ddG value 0!")
+            df_output_tmp = pd.DataFrame(data=[[pdb_i, wt_res, mut_res, res_num_pdb, res_num_serial, mut_category, 0, 0, 0, 0, True]],
+                columns = ['PDB_ID', 'WT_Residue', 'Mutant_Residue', 'Res_Num_PDB', 'Res_Num_Serial', 'Category', 'Calc_ddG', 'Calc_ddI', 'Calc_ddG_mean', 'Calc_ddI_mean', 'No_contacts_broken'])
+            df_output_all = df_output_all.append(df_output_tmp)
             continue    
         
         # Skip the record if no contacts are broken with the residue at the mutation position
@@ -896,12 +903,18 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
         # print (f"df_mut = {df_mut}")
         # print (f"df_wt = {df_wt}")
         if len(df_mut) == 0:
-            print (f"No contacts involving mutant residue broken while unfolding mutant structure of the {mut_category} mutant: {pdb_i} {wt_res}{res_num_pdb}{mut_res}")
+            print (f"No contacts involving mutant position broken while unfolding mutant structure of the {mut_category} mutant: {pdb_i} {wt_res}{res_num_pdb}{mut_res}. Will assign ddG value of 0!")
+            df_output_tmp = pd.DataFrame(data=[[pdb_i, wt_res, mut_res, res_num_pdb, res_num_serial, mut_category, 0, 0, 0, 0, True]],
+                columns = ['PDB_ID', 'WT_Residue', 'Mutant_Residue', 'Res_Num_PDB', 'Res_Num_Serial', 'Category', 'Calc_ddG', 'Calc_ddI', 'Calc_ddG_mean', 'Calc_ddI_mean', 'No_contacts_broken'])
+            df_output_all = df_output_all.append(df_output_tmp)
             continue
         
         # If no contacts are broken in the wild type for the mutation position, then skip this position
         if len(df_wt) == 0:
-            print (f"No contacts involving mutant residue broken while unfolding wildtype structure of the {mut_category} mutant: {pdb_i} {wt_res}{res_num_pdb}{mut_res}")
+            print (f"No contacts involving mutant position broken while unfolding wildtype structure of the {mut_category} mutant: {pdb_i} {wt_res}{res_num_pdb}{mut_res}. Will assign ddG value of 0!")
+            df_output_tmp = pd.DataFrame(data=[[pdb_i, wt_res, mut_res, res_num_pdb, res_num_serial, mut_category, 0, 0, 0, 0, True]],
+                columns = ['PDB_ID', 'WT_Residue', 'Mutant_Residue', 'Res_Num_PDB', 'Res_Num_Serial', 'Category', 'Calc_ddG', 'Calc_ddI', 'Calc_ddG_mean', 'Calc_ddI_mean', 'No_contacts_broken'])
+            df_output_all = df_output_all.append(df_output_tmp)
             continue
         df_wt.reset_index(drop=True, inplace=True)
         df_mut.reset_index(drop=True, inplace=True)
@@ -925,8 +938,8 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
         calc_ddG_mean = calc_ddG/len(del_energy)
         calc_ddI_mean = calc_ddI/len(del_int_dist)
 
-        df_output_tmp = pd.DataFrame(data=[[pdb_i, wt_res, mut_res, res_num_pdb, res_num_serial, mut_category, calc_ddG, calc_ddI, calc_ddG_mean, calc_ddI_mean]],
-            columns = ['PDB_ID', 'WT_Residue', 'Mutant_Residue', 'Res_Num_PDB', 'Res_Num_Serial', 'Category', 'Calc_ddG', 'Calc_ddI', 'Calc_ddG_mean', 'Calc_ddI_mean'])
+        df_output_tmp = pd.DataFrame(data=[[pdb_i, wt_res, mut_res, res_num_pdb, res_num_serial, mut_category, calc_ddG, calc_ddI, calc_ddG_mean, calc_ddI_mean, False]],
+            columns = ['PDB_ID', 'WT_Residue', 'Mutant_Residue', 'Res_Num_PDB', 'Res_Num_Serial', 'Category', 'Calc_ddG', 'Calc_ddI', 'Calc_ddG_mean', 'Calc_ddI_mean', 'No_contacts_broken'])
         df_output_all = df_output_all.append(df_output_tmp)
     # Scale the calculated energy and ddI using the coefficients obtained by fitting
     # the calculated energy to the experimental energy
