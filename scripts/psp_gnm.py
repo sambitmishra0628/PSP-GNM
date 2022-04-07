@@ -442,14 +442,15 @@ def calc_gnm(coord, cutoff=9, num_modes=10, spring_type=None, res_codes=None, co
 
 def sanity_check(data_file, pdb_dir):
     """
-    Check how many records in the mutant csv file have correct correspondence
-    between the mutated amino acid and its position in the wildtype sequence.
+    Check the data_file to see if the residues in the WILD_RES column (forward mutants) or
+    MUTANT_RES (reverse_mutants) column of the data_file are indeed present in the PDB file
+    at the positions specified by RES_NUM_PDB.
 
     Parameters:
         data_file : Name of the data file with information on PDB_CHAIN, wt_residue, mut_residue, residue_position
         pdb_dir : The directory including the atomic processed PDB files
 
-    Returns: Total number of records that have correct mapping
+    Returns: Total number of records that show correct mapping
     """
     if not pdb_dir.endswith('/'):
         pdb_dir += '/'
@@ -474,6 +475,8 @@ def sanity_check(data_file, pdb_dir):
                 correct_recs += 1
             elif category_i == 'Reverse' and seq_i[int(serial_res_num)] ==  res_i_mut:
                 correct_recs += 1
+            else:
+                print (f"Residue mismatch for {category_i} mutant: {pdb_id_i}, {pos_i}, wt_res = {res_i_mut}, mut_res = {res_i_wt}") 
         else:
             sys.exit(f"RES_NUM_PDB is not defined in the data file for {pdb_id_i} WT:{res_i_wt}, MUT:{res_i_mut}!")        
     print (f"{correct_recs}/{total_recs} records show correct mutant position and amino acid match")
@@ -951,9 +954,21 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
     # Fit linear regression model for forward mutations
     df_output_all_fw = df_output_all.copy()
     df_output_all_fw = df_output_all_fw.loc[df_output_all_fw['Category'] == 'Forward']
-    if len(df_output_all_fw) > 0:
-        coeff = 0.11
-        intercept = -0.85
+    if len(df_output_all_fw) > 0 :
+        #coeff = 0.11
+        #intercept = -0.85
+        if dist_cutoff == 9 and num_modes == 10:
+            coeff = 0.08
+            intercept = -1.01
+        elif dist_cutoff == 9 and num_modes == 20:
+            coeff = 0.08
+            intercept = -0.99
+        else:
+            print (f"Scaling coefficients and intercepts for user-defined num_modes={num_modes} and dist_cutoff={dist_cutoff} unavailable.\n"
+            "Using coefficients for num_modes = 20, dist_cutoff = 9 instead!")
+            coeff = 0.08
+            intercept = -0.99    
+               
         calc_ddG_unscaled = -(df_output_all_fw['Calc_ddG']-df_output_all_fw['Calc_ddI'])
         ddG_PSP_GNM_fw = np.array(list(calc_ddG_unscaled))*coeff + intercept
         df_output_all_fw['ddG_PSP_GNM'] = ddG_PSP_GNM_fw
@@ -963,8 +978,19 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
     df_output_all_rev = df_output_all_rev.loc[df_output_all_rev['Category'] == 'Reverse']
 
     if len(df_output_all_rev) > 0:
-        coeff = 0.11
-        intercept = 0.85
+        #coeff = 0.11
+        #intercept = 0.85
+        if dist_cutoff == 9 and num_modes == 10:
+            coeff = 0.08
+            intercept = -1.01
+        elif dist_cutoff == 9 and num_modes == 20:
+            coeff = 0.08
+            intercept = -0.99
+        else:
+            print (f"Scaling coefficients and intercepts for user-defined num_modes={num_modes} and dist_cutoff={dist_cutoff} unavailable.\n"
+            "Using coefficients for num_modes = 20, dist_cutoff = 9 instead!")
+            coeff = 0.08
+            intercept = -0.99    
         calc_ddG_unscaled = -(df_output_all_rev['Calc_ddG']-df_output_all_rev['Calc_ddI'])
         ddG_PSP_GNM_rev = np.array(list(calc_ddG_unscaled))*coeff + intercept
         df_output_all_rev['ddG_PSP_GNM'] = ddG_PSP_GNM_rev
