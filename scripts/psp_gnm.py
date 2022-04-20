@@ -981,15 +981,34 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
         if dist_cutoff == 9 and num_modes == 10:
             coeff = 0.08
             intercept = -1.01
+            # Coeff and intercepts for energies
+            coeff_calc_ddg = -0.07
+            intercept_calc_ddg = -1.0
+            # Coeff and intercepts for entropies
+            coeff_calc_ddi = -0.2
+            intercept_calc_ddi = -1.01
         elif dist_cutoff == 9 and num_modes == 20:
             coeff = 0.08
             intercept = -0.99
+            # Coeff and intercepts for energies
+            coeff_calc_ddg = -0.07
+            intercept_calc_ddg = -0.99
+            # Coeff and intercepts for entropies
+            coeff_calc_ddi = -0.22
+            intercept_calc_ddi = -1.01
         else:
             print (f"Scaling coefficients and intercepts for num_modes={num_modes} and dist_cutoff={dist_cutoff} unavailable.\n"
             "Using coefficients for num_modes = 10, dist_cutoff = 9 instead!")
             coeff = 0.08
-            intercept = -1.01    
-               
+            intercept = -1.01
+            # Coeff and intercepts for energies
+            coeff_calc_ddg = -0.07
+            intercept_calc_ddg = -1.0
+            # Coeff and intercepts for entropies
+            coeff_calc_ddi = -0.2
+            intercept_calc_ddi = -1.01            
+        df_output_all_fw['Calc_Energy_scaled'] = np.array(list(df_output_all_fw['Calc_ddG'])) * coeff_calc_ddg + intercept_calc_ddg
+        df_output_all_fw['Calc_Entropy_scaled'] = np.array(list(df_output_all_fw['Calc_ddI'])) * coeff_calc_ddi + intercept_calc_ddi               
         calc_ddG_unscaled = -(df_output_all_fw['Calc_ddG']-df_output_all_fw['Calc_ddI'])
         ddG_PSP_GNM_fw = np.array(list(calc_ddG_unscaled))*coeff + intercept
         df_output_all_fw['ddG_PSP_GNM'] = ddG_PSP_GNM_fw
@@ -1004,17 +1023,38 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
         if dist_cutoff == 9 and num_modes == 10:
             coeff = 0.08
             intercept = 1.01
+            # Coeff and intercepts for energies
+            coeff_calc_ddg = -0.07
+            intercept_calc_ddg = 1.0
+            # Coeff and intercepts for entropies
+            coeff_calc_ddi = -0.2
+            intercept_calc_ddi = 1.01
         elif dist_cutoff == 9 and num_modes == 20:
             coeff = 0.08
             intercept = 0.99
+            # Coeff and intercepts for energies
+            coeff_calc_ddg = -0.07
+            intercept_calc_ddg = 0.99
+            # Coeff and intercepts for entropies
+            coeff_calc_ddi = -0.22
+            intercept_calc_ddi = 1.01
         else:
             print (f"Scaling coefficients and intercepts for num_modes={num_modes} and dist_cutoff={dist_cutoff} unavailable.\n"
             "Using coefficients for num_modes = 10, dist_cutoff = 9 instead!")
             coeff = 0.08
-            intercept = 1.01    
+            intercept = 1.01
+            # Coeff and intercepts for energies
+            coeff_calc_ddg = -0.07
+            intercept_calc_ddg = 1.0
+            # Coeff and intercepts for entropies
+            coeff_calc_ddi = -0.2
+            intercept_calc_ddi = 1.01            
+        df_output_all_rev['Calc_Energy_scaled'] = np.array(list(df_output_all_rev['Calc_ddG'])) * coeff_calc_ddg + intercept_calc_ddg
+        df_output_all_rev['Calc_Entropy_scaled'] = np.array(list(df_output_all_rev['Calc_ddI'])) * coeff_calc_ddi + intercept_calc_ddi
         calc_ddG_unscaled = -(df_output_all_rev['Calc_ddG']-df_output_all_rev['Calc_ddI'])
         ddG_PSP_GNM_rev = np.array(list(calc_ddG_unscaled))*coeff + intercept
         df_output_all_rev['ddG_PSP_GNM'] = ddG_PSP_GNM_rev
+
         
     if len(df_output_all_fw) > 0 and len(df_output_all_rev) > 0:
         df_output_all_new = pd.concat([df_output_all_fw, df_output_all_rev])
