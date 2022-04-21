@@ -754,10 +754,11 @@ def run_ab_initio_stability_prediction_mutant(row_i, outdir, processed_pdb_dir, 
     if mut_category == 'Forward' and os.path.isfile(outdir + outfile):
         print (f"Skipping unfolding simulation for mutant {pdb_i}: {row_i['WILD_RES']}{row_i['RES_NUM_PDB']}{row_i['MUTANT_RES']} as contact-break file is already present!")
         return
-    if (mut_category == 'Forward' or mut_category == 'Reverse') and not os.path.isfile(outdir + outfile):
+    if ((mut_category == 'Forward') or (mut_category == 'Reverse' and rev_mut_pdb)) and (not os.path.isfile(outdir + outfile)):
         # If the rev_mut_pdb is set for reverse mutants, that means the PDB files in the wt_pdb_dir have 
         # the forward mutations at the RES_NUM_PDB position. We need to generate the contact break calculations
         # for the reverse mutations.
+        #print (f"Condition satisfied, rev_mut_pdb = {rev_mut_pdb}, {type(rev_mut_pdb)}")
         print (f"Running calculations for {pdb_i}, mutation {wt_res}{res_num_pdb}{mut_res} dist_cutoff = {dist_cutoff}, num_modes = {num_modes}...",flush=True)
         df_contact_breaks_mut = calc_mut_energy_folded_unfolded(processed_pdb_dir, pdb_i, wt_res, mut_res, res_num_pdb, dist_cutoff, num_modes)
     
@@ -867,7 +868,7 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
         if mut_category == 'Reverse' and not rev_mut_pdb:
             # Switch the contact break files (i.e., wildtype contact break is now treated as the mutant
             # contact break file and the mutant contact break file as the wildtype)
-            print ("rev_mut_pdb is not set")
+            #print ("rev_mut_pdb is not set")
             wt_cont_brk_file = pdb_i + '_' + row_i['MUTANT_RES'] + str(row_i['RES_NUM_PDB']) + row_i['WILD_RES'] + '_contact_breaks.csv'    
             mut_cont_brk_file = pdb_i + '_wt_contact_breaks.csv' 
         elif mut_category == 'Forward' or (mut_category == 'Reverse' and rev_mut_pdb):    
@@ -976,8 +977,18 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
     df_output_all_fw = df_output_all.copy()
     df_output_all_fw = df_output_all_fw.loc[df_output_all_fw['Category'] == 'Forward']
     if len(df_output_all_fw) > 0 :
-        #coeff = 0.11
-        #intercept = -0.85
+        # Block comment #
+        #
+        # Uncomment when fitting to S2298 data
+        # calc_ddG_unscaled = -(df_output_all_fw['Calc_ddG']-df_output_all_fw['Calc_ddI'])
+        # reg_mdl_fw = LinearRegression().fit(np.array(calc_ddG_unscaled).reshape(-1,1),
+                                            # df_output_all_fw['EXP_DDG'])
+        # coeff,intercept = reg_mdl_fw.coef_[0], reg_mdl_fw.intercept_
+        # coeff = round(coeff,2)
+        # intercept = round(intercept,2)
+        #
+        # End Block comment #
+        
         if dist_cutoff == 9 and num_modes == 10:
             coeff = 0.08
             intercept = -1.01
@@ -992,7 +1003,7 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
             intercept = -0.99
             # Coeff and intercepts for energies
             coeff_calc_ddg = -0.07
-            intercept_calc_ddg = -0.99
+            intercept_calc_ddg = -0.98
             # Coeff and intercepts for entropies
             coeff_calc_ddi = -0.22
             intercept_calc_ddi = -1.01
@@ -1034,7 +1045,7 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
             intercept = 0.99
             # Coeff and intercepts for energies
             coeff_calc_ddg = -0.07
-            intercept_calc_ddg = 0.99
+            intercept_calc_ddg = 0.98
             # Coeff and intercepts for entropies
             coeff_calc_ddi = -0.22
             intercept_calc_ddi = 1.01
