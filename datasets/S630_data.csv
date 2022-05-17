@@ -1,0 +1,629 @@
+﻿PDB_CHAIN,WILD_RES,RES_NUM_PDB,MUTANT_RES,Category,PH,TEMPERATURE,EXP_DDG,ALAnonALA,SST
+1AG2A,E,200,K,Forward,7,25,-0.14,nonALA,Alpha Helix
+1AG2A,F,198,S,Forward,7,25,-2.46,nonALA,None
+1AG2A,M,129,V,Forward,7,25,-0.33,nonALA,Strand
+1AG2A,Q,217,R,Forward,7,25,-2.13,nonALA,Alpha Helix
+1AG2A,R,208,H,Forward,7,25,-1.44,nonALA,Alpha Helix
+1AG2A,T,183,A,Forward,7,25,-4.62,ALA,Pi Helix
+1AG2A,T,190,V,Forward,7,25,-0.17,nonALA,Alpha Helix
+1AG2A,V,180,I,Forward,7,25,-0.5,nonALA,Pi Helix
+1AG2A,V,210,I,Forward,7,25,-0.26,nonALA,Alpha Helix
+1AJ3A,W,22,F,Forward,7.5,25,-1.11,nonALA,Alpha Helix
+1ANKA,R,88,G,Forward,7.4,51.8,-0.2,nonALA,None
+1B26A,E,231,A,Forward,7,69.5,-0.17,ALA,Pi Helix
+1B26A,K,193,A,Forward,7,69.5,0.23,ALA,Alpha Helix
+1B26A,R,190,A,Forward,7,69.5,-0.34,ALA,Alpha Helix
+1BNIA,A,32,C,Forward,6.3,25,-1,nonALA,Alpha Helix
+1BNIA,A,32,D,Forward,6.3,25,-0.7,nonALA,Alpha Helix
+1BNIA,A,32,E,Forward,6.3,25,-0.6,nonALA,Alpha Helix
+1BNIA,A,32,F,Forward,6.3,25,-0.7,nonALA,Alpha Helix
+1BNIA,A,32,G,Forward,6.3,25,-0.9,nonALA,Alpha Helix
+1BNIA,A,32,H,Forward,6.3,25,-0.8,nonALA,Alpha Helix
+1BNIA,A,32,I,Forward,6.3,25,-0.8,nonALA,Alpha Helix
+1BNIA,A,32,K,Forward,6.3,25,-0.2,nonALA,Alpha Helix
+1BNIA,A,32,L,Forward,6.3,25,-0.3,nonALA,Alpha Helix
+1BNIA,A,32,M,Forward,6.3,25,-0.3,nonALA,Alpha Helix
+1BNIA,A,32,N,Forward,6.3,25,-0.7,nonALA,Alpha Helix
+1BNIA,A,32,Q,Forward,6.3,25,-0.5,nonALA,Alpha Helix
+1BNIA,A,32,R,Forward,6.3,25,-0.1,nonALA,Alpha Helix
+1BNIA,A,32,S,Forward,6.3,25,-0.4,nonALA,Alpha Helix
+1BNIA,A,32,T,Forward,6.3,25,-0.8,nonALA,Alpha Helix
+1BNIA,A,32,V,Forward,6.3,25,-0.9,nonALA,Alpha Helix
+1BNIA,A,32,W,Forward,6.3,25,-1,nonALA,Alpha Helix
+1BNIA,A,32,Y,Forward,6.3,25,-0.8,nonALA,Alpha Helix
+1BNIA,D,12,S,Forward,6.3,25,-0.65,nonALA,Alpha Helix
+1BNIA,D,44,E,Forward,6.3,25,0.1,nonALA,Alpha Helix
+1BNIA,D,8,G,Forward,6.3,25,-1.17,nonALA,Alpha Helix
+1BNIA,D,8,S,Forward,6.3,25,-0.97,nonALA,Alpha Helix
+1BNIA,D,93,N,Forward,6.3,25,-4.11,nonALA,Turn
+1BNIA,E,29,A,Forward,6.3,25,-1.25,ALA,Alpha Helix
+1BNIA,E,29,Q,Forward,6.3,25,0,nonALA,Alpha Helix
+1BNIA,E,29,S,Forward,6.3,25,-1.23,nonALA,Alpha Helix
+1BNIA,E,73,A,Forward,6.3,25,-2.5,ALA,Strand
+1BNIA,E,73,G,Forward,6.3,25,-5.4,nonALA,Strand
+1BNIA,G,34,A,Forward,6.3,25,-3.12,ALA,Turn
+1BNIA,G,34,D,Forward,6.3,25,-3.39,nonALA,Turn
+1BNIA,G,34,K,Forward,6.3,25,-3.12,nonALA,Turn
+1BNIA,G,34,N,Forward,6.3,25,-2.75,nonALA,Turn
+1BNIA,G,34,R,Forward,6.3,25,-2.42,nonALA,Turn
+1BNIA,G,34,S,Forward,6.3,25,-3.2,nonALA,Turn
+1BNIA,G,34,T,Forward,6.3,25,-3.37,nonALA,Turn
+1BNIA,G,65,S,Forward,6.3,25,0.5,nonALA,None
+1BNIA,H,18,A,Forward,6.3,25,-1.85,ALA,Bend
+1BNIA,H,18,D,Forward,6.3,25,-2.56,nonALA,Bend
+1BNIA,H,18,N,Forward,6.3,25,-1.68,nonALA,Bend
+1BNIA,H,18,Q,Forward,6.3,25,-1.6,nonALA,Bend
+1BNIA,H,18,R,Forward,6.3,25,-1.17,nonALA,Bend
+1BNIA,H,18,S,Forward,6.3,25,-2.28,nonALA,Bend
+1BNIA,I,109,A,Forward,6.3,25,-2.1,ALA,None
+1BNIA,I,25,A,Forward,6.3,25,-3.5,ALA,Strand
+1BNIA,I,25,V,Forward,6.3,25,-1.1,nonALA,Strand
+1BNIA,I,4,A,Forward,6.3,25,-1.4,ALA,None
+1BNIA,I,4,V,Forward,6.3,25,-0.6,nonALA,None
+1BNIA,I,51,A,Forward,6.3,25,-4.7,ALA,Strand
+1BNIA,I,55,A,Forward,6.3,25,-1.1,ALA,Strand
+1BNIA,I,55,G,Forward,6.3,25,-3.1,nonALA,Strand
+1BNIA,I,55,T,Forward,6.3,25,-0.6,nonALA,Strand
+1BNIA,I,55,V,Forward,6.3,25,-0.3,nonALA,Strand
+1BNIA,I,76,A,Forward,6.3,25,-1.9,ALA,None
+1BNIA,I,76,V,Forward,6.3,25,-0.8,nonALA,None
+1BNIA,I,88,G,Forward,6.3,25,-7.4,nonALA,Strand
+1BNIA,I,88,L,Forward,6.3,25,-0.3,nonALA,Strand
+1BNIA,I,96,G,Forward,6.3,25,-5.7,nonALA,Strand
+1BNIA,K,108,R,Forward,6.3,25,0.9,nonALA,Strand
+1BNIA,K,66,A,Forward,6.3,25,0.2,ALA,None
+1BNIA,L,33,Q,Forward,6.3,25,-1.3,nonALA,Turn
+1BNIA,L,89,G,Forward,6.3,25,-7,nonALA,Strand
+1BNIA,L,89,T,Forward,6.3,25,-2.5,nonALA,Strand
+1BNIA,L,95,G,Forward,6.3,25,-4.7,nonALA,None
+1BNIA,N,23,A,Forward,6.3,25,-2.2,ALA,Turn
+1BNIA,N,41,D,Forward,6.3,25,-2.5,nonALA,None
+1BNIA,N,58,A,Forward,6.3,25,-2.7,ALA,None
+1BNIA,N,58,D,Forward,6.3,25,0.5,nonALA,None
+1BNIA,N,5,A,Forward,6.3,25,-1.9,ALA,None
+1BNIA,N,77,A,Forward,6.3,25,-1.6,ALA,Bend
+1BNIA,N,84,A,Forward,6.3,25,-2,ALA,None
+1BNIA,Q,104,A,Forward,6.3,25,-0.2,ALA,Bend
+1BNIA,Q,15,A,Forward,6.3,25,-0.2,ALA,Alpha Helix
+1BNIA,Q,15,G,Forward,6.3,25,-1.6,nonALA,Alpha Helix
+1BNIA,Q,15,I,Forward,6.3,25,1,nonALA,Alpha Helix
+1BNIA,Q,31,A,Forward,6.3,25,0.1,ALA,Alpha Helix
+1BNIA,Q,31,G,Forward,6.3,25,-0.98,nonALA,Alpha Helix
+1BNIA,R,110,A,Forward,6.3,25,-0.4,ALA,None
+1BNIA,R,69,K,Forward,6.3,25,-3.13,nonALA,None
+1BNIA,R,69,S,Forward,6.3,25,-2.72,nonALA,None
+1BNIA,R,72,G,Forward,6.3,25,-2.5,nonALA,Strand
+1BNIA,R,83,K,Forward,6.3,25,-4.13,nonALA,None
+1BNIA,S,28,A,Forward,6.3,25,0.41,ALA,Alpha Helix
+1BNIA,S,28,E,Forward,6.3,25,0.4,nonALA,Alpha Helix
+1BNIA,S,28,G,Forward,6.3,25,-0.45,nonALA,Alpha Helix
+1BNIA,S,85,A,Forward,6.3,25,-0.12,ALA,Bend
+1BNIA,T,100,G,Forward,6.3,25,-2.8,nonALA,Bend
+1BNIA,T,105,V,Forward,6.3,25,-2.2,nonALA,None
+1BNIA,T,16,A,Forward,6.3,25,-0.27,ALA,Alpha Helix
+1BNIA,T,16,G,Forward,6.3,25,-1.66,nonALA,Alpha Helix
+1BNIA,T,26,D,Forward,6.3,25,-0.08,nonALA,None
+1BNIA,T,79,V,Forward,6.3,25,0.3,nonALA,None
+1BNIA,T,99,V,Forward,6.3,25,-2.7,nonALA,Strand
+1BNIA,V,10,A,Forward,6.3,25,-3.4,ALA,Alpha Helix
+1BNIA,V,10,T,Forward,6.3,25,-2.5,nonALA,Alpha Helix
+1BNIA,V,36,A,Forward,6.3,25,-1.3,ALA,None
+1BNIA,V,36,T,Forward,6.3,25,-1.1,nonALA,None
+1BNIA,V,45,A,Forward,6.3,25,-1.8,ALA,Alpha Helix
+1BNIA,V,45,T,Forward,6.3,25,-2.4,nonALA,Alpha Helix
+1BNIA,Y,103,F,Forward,6.3,25,0,nonALA,Bend
+1BNIA,Y,13,F,Forward,6.3,25,-0.41,nonALA,Alpha Helix
+1BNIA,Y,13,G,Forward,6.3,25,-6.4,nonALA,Alpha Helix
+1BNIA,Y,17,F,Forward,6.3,25,-0.3,nonALA,Alpha Helix
+1BNIA,Y,17,S,Forward,6.3,25,-2.57,nonALA,Alpha Helix
+1BNIA,Y,24,F,Forward,6.3,25,0,nonALA,Strand
+1BNIA,Y,97,G,Forward,6.3,25,-6.6,nonALA,Strand
+1C5GA,E,350,P,Forward,6.6,50.2,0.3,nonALA,
+1C5GA,E,350,R,Forward,6.6,50.2,-0.3,nonALA,
+1C9OA,L,66,A,Forward,7,70,-0.07,ALA,
+1CDCB,A,40,G,Forward,7,25,1.71,nonALA,Strand
+1CDCB,I,18,V,Forward,7,25,1.17,nonALA,None
+1CDCB,I,57,V,Forward,7,25,0.43,nonALA,Strand
+1CDCB,L,16,V,Forward,7,25,2.2,nonALA,Strand
+1CDCB,L,50,V,Forward,7,25,-0.37,nonALA,Isolated beta-bridge
+1CDCB,L,89,V,Forward,7,25,0.14,nonALA,Strand
+1CDCB,L,95,V,Forward,7,25,0.75,nonALA,Strand
+1CDCB,V,30,A,Forward,7,25,4.88,ALA,Strand
+1CDCB,V,78,A,Forward,7,25,3.01,ALA,Strand
+1CLWA,E,309,V,Forward,7.4,88.4,-2.3,nonALA,Strand
+1CLWA,G,177,R,Forward,7.4,88.4,-2.1,nonALA,Strand
+1CLWA,G,244,R,Forward,7.4,88.4,-4,nonALA,Turn
+1CLWA,G,323,D,Forward,7.4,88.4,-0.4,nonALA,Bend
+1CLWA,R,285,K,Forward,7.4,88.4,-10.3,nonALA,Strand
+1CLWA,R,382,S,Forward,7.4,88.4,-17.4,nonALA,Strand
+1CLWA,T,235,I,Forward,7.4,88.4,-1.6,nonALA,None
+1FC1A,D,399,A,Forward,7.4,20,-0.7,ALA,None
+1FC1A,F,405,A,Forward,7.4,20,-2.5,ALA,Strand
+1FC1A,K,370,A,Forward,7.4,20,-1.1,ALA,Strand
+1FC1A,K,392,A,Forward,7.4,20,-0.4,ALA,Strand
+1FC1A,K,409,A,Forward,7.4,20,-2.4,ALA,Strand
+1FC1A,L,351,A,Forward,7.4,20,-1.3,ALA,Strand
+1FC1A,L,368,A,Forward,7.4,20,-2.2,ALA,Strand
+1FC1A,L,398,A,Forward,7.4,20,-0.1,ALA,Strand
+1FC1A,P,395,A,Forward,7.4,20,-3.2,ALA,None
+1FC1A,Q,347,A,Forward,7.4,20,-1.1,ALA,Strand
+1FC1A,T,350,A,Forward,7.4,20,-0.1,ALA,Strand
+1FC1A,T,366,A,Forward,7.4,20,-2.3,ALA,Strand
+1FC1A,T,394,A,Forward,7.4,20,-0.6,ALA,None
+1FC1A,V,397,A,Forward,7.4,20,-0.6,ALA,Strand
+1FC1A,Y,349,A,Forward,7.4,20,-0.7,ALA,Strand
+1FC1A,Y,407,A,Forward,7.4,20,-2.1,ALA,Strand
+1FLVA,A,101,L,Forward,7,44.15,-0.53,nonALA,Alpha Helix
+1FLVA,A,101,V,Forward,7,44.15,-0.69,nonALA,Alpha Helix
+1FLVA,G,87,A,Forward,7,44.15,-0.09,ALA,Strand
+1FLVA,G,87,L,Forward,7,44.15,-0.21,nonALA,Strand
+1FLVA,G,87,V,Forward,7,44.15,0.12,nonALA,Strand
+1FTGA,A,101,V,Forward,7,43.25,0.16,nonALA,Alpha Helix
+1FTGA,D,75,K,Forward,7,43.25,0.4,nonALA,3-10 Helix
+1FTGA,E,107,A,Forward,7,43.25,0.15,ALA,Alpha Helix
+1FTGA,E,20,K,Forward,7,43.25,0.27,nonALA,Alpha Helix
+1FTGA,E,40,K,Forward,7,43.25,0.17,nonALA,None
+1FTGA,E,72,K,Forward,7,43.25,0.33,nonALA,Turn
+1FTGA,G,68,A,Forward,7,43.25,0.38,ALA,Alpha Helix
+1FTGA,I,21,A,Forward,7,43.25,-0.02,ALA,Alpha Helix
+1FTGA,I,21,G,Forward,7,43.25,0.17,nonALA,Alpha Helix
+1FTGA,L,50,A,Forward,7,43.25,0.02,ALA,Strand
+1FTGA,Q,111,G,Forward,7,43.25,0.22,nonALA,Alpha Helix
+1FTGA,Q,99,A,Forward,7,43.25,0.43,ALA,Turn
+1FTGA,V,18,I,Forward,7,43.25,0.19,nonALA,Alpha Helix
+1FTGA,V,83,I,Forward,7,43.25,0.05,nonALA,Strand
+1HFYA,T,29,I,Forward,7,25,1.37,nonALA,Alpha Helix
+1HFYA,T,29,V,Forward,7,25,1.86,nonALA,Alpha Helix
+1IGVA,D,19,N,Forward,7,25,0.74,nonALA,None
+1IGVA,E,26,Q,Forward,7,25,0.09,nonALA,Alpha Helix
+1IROA,I,33,L,Forward,9.08,107,0.76,nonALA,Bend
+1IROA,V,24,I,Forward,9.08,107,0.36,nonALA,Isolated beta-bridge
+1KFWA,G,253,P,Forward,7.5,16,-0.65,nonALA,Turn
+1KFWA,G,92,P,Forward,7.5,16,0.5,nonALA,None
+1L63A,A,129,M,Forward,5.4,65.3,-1.9,nonALA,Alpha Helix
+1L63A,F,104,A,Forward,5.4,65.3,-2.7,ALA,Alpha Helix
+1L63A,F,104,M,Forward,5.4,65.3,-0.4,nonALA,Alpha Helix
+1L63A,F,153,A,Forward,5.4,65.3,-3.4,ALA,Alpha Helix
+1L63A,I,100,A,Forward,5.4,65.3,-2.5,ALA,Alpha Helix
+1L63A,I,100,M,Forward,5.4,65.3,-1.6,nonALA,Alpha Helix
+1L63A,I,17,A,Forward,5.4,65.3,-2.3,ALA,Strand
+1L63A,I,17,M,Forward,5.4,65.3,-2.2,nonALA,Strand
+1L63A,I,27,M,Forward,5.4,65.3,-3.1,nonALA,Strand
+1L63A,I,50,A,Forward,5.4,65.3,-1.6,ALA,Alpha Helix
+1L63A,I,50,M,Forward,5.4,65.3,-0.4,nonALA,Alpha Helix
+1L63A,I,78,A,Forward,5.4,65.3,-1.2,ALA,Alpha Helix
+1L63A,L,118,A,Forward,5.4,65.3,-3.2,ALA,Alpha Helix
+1L63A,L,121,A,Forward,5.4,65.3,-2.2,ALA,Alpha Helix
+1L63A,L,33,A,Forward,5.4,65.3,-2.9,ALA,Strand
+1L63A,L,33,M,Forward,5.4,65.3,-2,nonALA,Strand
+1L63A,L,66,A,Forward,5.4,65.3,-3.3,ALA,Alpha Helix
+1L63A,L,66,M,Forward,5.4,65.3,-1,nonALA,Alpha Helix
+1L63A,L,7,A,Forward,5.4,65.3,-2.3,ALA,Alpha Helix
+1L63A,L,84,A,Forward,5.4,65.3,-3.7,ALA,Alpha Helix
+1L63A,L,91,A,Forward,5.4,65.3,-2.6,ALA,Bend
+1L63A,L,99,A,Forward,5.4,65.3,-4.1,ALA,Alpha Helix
+1L63A,M,102,A,Forward,5.4,65.3,-2.9,ALA,Alpha Helix
+1L63A,M,106,A,Forward,5.4,65.3,-1.9,ALA,Alpha Helix
+1L63A,M,6,A,Forward,5.4,65.3,-1.6,ALA,Alpha Helix
+1L63A,V,103,A,Forward,5.4,65.3,-1.6,ALA,Alpha Helix
+1L63A,V,111,A,Forward,5.4,65.3,-1,ALA,Alpha Helix
+1L63A,V,111,M,Forward,5.4,65.3,-0.7,nonALA,Alpha Helix
+1L63A,V,149,A,Forward,5.4,65.3,-3.2,ALA,Alpha Helix
+1L63A,V,149,M,Forward,5.4,65.3,-2.8,nonALA,Alpha Helix
+1L63A,V,87,A,Forward,5.4,65.3,-1.5,ALA,Alpha Helix
+1L63A,V,87,M,Forward,5.4,65.3,-2.3,nonALA,Alpha Helix
+1N0JA,Q,143,N,Forward,7.8,70,2.79,nonALA,Turn
+1N0JA,Y,34,F,Forward,7.8,70,12.7,nonALA,Alpha Helix
+1PGAA,A,23,P,Forward,5.5,25,-0.3,nonALA,Alpha Helix
+1PGAA,A,24,P,Forward,5.5,25,-0.5,nonALA,Alpha Helix
+1PGAA,A,48,P,Forward,5.5,25,-0.7,nonALA,Turn
+1PGAA,D,36,P,Forward,5.5,25,-3.1,nonALA,Alpha Helix
+1PGAA,G,9,P,Forward,5.5,25,-2.4,nonALA,None
+1PGAA,I,6,N,Forward,5.2,25,2.07,nonALA,Strand
+1PGAA,I,6,N,Forward,5.2,63,1.82,nonALA,Strand
+1PGAA,I,6,T,Forward,5.2,25,2,nonALA,Strand
+1PGAA,I,6,T,Forward,5.2,63,1.76,nonALA,Strand
+1PGAA,K,10,P,Forward,5.5,25,-0.2,nonALA,Bend
+1PGAA,T,25,P,Forward,5.5,25,-2.8,nonALA,Alpha Helix
+1PGAA,T,2,P,Forward,5.5,25,-2.7,nonALA,Strand
+1PGAA,T,53,F,Forward,5.2,25,4.61,nonALA,Strand
+1PGAA,T,53,F,Forward,5.2,63,4.1,nonALA,Strand
+1PGAA,T,53,I,Forward,5.2,25,3.3,nonALA,Strand
+1PGAA,T,53,I,Forward,5.2,63,3.81,nonALA,Strand
+1PGAA,T,53,V,Forward,5.2,25,2.8,nonALA,Strand
+1PGAA,T,53,V,Forward,5.2,63,3.38,nonALA,Strand
+1PGAA,T,53,Y,Forward,5.2,25,4.1,nonALA,Strand
+1PGAA,T,53,Y,Forward,5.2,63,4.29,nonALA,Strand
+1PGAA,V,21,P,Forward,5.5,25,0.5,nonALA,Bend
+1PGAA,V,29,P,Forward,5.5,25,-3.5,nonALA,Alpha Helix
+1PINA,A,31,G,Forward,7,40,-1.49,nonALA,None
+1PINA,E,12,A,Forward,7,40,-0.48,ALA,Strand
+1PINA,E,35,A,Forward,7,40,-0.73,ALA,Bend
+1PINA,F,25,A,Forward,7,40,-2.14,ALA,Strand
+1PINA,F,25,L,Forward,7,40,-1.37,nonALA,Strand
+1PINA,F,25,Y,Forward,7,40,0.22,nonALA,Strand
+1PINA,G,10,A,Forward,7,40,-0.85,ALA,Turn
+1PINA,G,20,A,Forward,7,40,-0.86,ALA,None
+1PINA,H,27,A,Forward,7,40,-0.12,ALA,Turn
+1PINA,H,27,G,Forward,7,40,-0.68,nonALA,Turn
+1PINA,I,28,A,Forward,7,40,-0.36,ALA,Turn
+1PINA,I,28,G,Forward,7,40,-0.48,nonALA,Turn
+1PINA,K,13,A,Forward,7,40,-0.02,ALA,Strand
+1PINA,K,6,A,Forward,7,40,0.15,ALA,None
+1PINA,L,7,A,Forward,7,40,-1.73,ALA,None
+1PINA,L,7,I,Forward,7,40,-0.85,nonALA,None
+1PINA,L,7,N,Forward,7,40,-0.9,nonALA,None
+1PINA,L,7,V,Forward,7,40,-1.26,nonALA,None
+1PINA,M,15,A,Forward,7,40,-0.59,ALA,Strand
+1PINA,N,26,D,Forward,7,40,-1.88,nonALA,Strand
+1PINA,N,30,A,Forward,7,40,-0.47,ALA,None
+1PINA,N,30,G,Forward,7,40,0.53,nonALA,None
+1PINA,P,8,A,Forward,7,40,-0.97,ALA,None
+1PINA,P,8,G,Forward,7,40,-0.92,nonALA,None
+1PINA,P,9,A,Forward,7,40,-0.19,ALA,Turn
+1PINA,P,9,G,Forward,7,40,-0.49,nonALA,Turn
+1PINA,Q,33,A,Forward,7,40,-0.57,ALA,Strand
+1PINA,R,14,A,Forward,7,40,-1.63,ALA,Strand
+1PINA,R,17,A,Forward,7,40,0,ALA,Turn
+1PINA,R,17,G,Forward,7,40,-0.22,nonALA,Turn
+1PINA,R,21,A,Forward,7,40,-0.65,ALA,None
+1PINA,R,21,G,Forward,7,40,-0.67,nonALA,None
+1PINA,R,36,A,Forward,7,40,-0.29,ALA,None
+1PINA,S,16,A,Forward,7,40,-0.44,ALA,None
+1PINA,S,16,G,Forward,7,40,-0.92,nonALA,None
+1PINA,S,18,A,Forward,7,40,0.03,ALA,Turn
+1PINA,S,18,G,Forward,7,40,0.02,nonALA,Turn
+1PINA,S,19,A,Forward,7,40,-0.14,ALA,Bend
+1PINA,S,19,G,Forward,7,40,0.01,nonALA,Bend
+1PINA,S,32,A,Forward,7,40,-0.26,ALA,Strand
+1PINA,S,32,G,Forward,7,40,-0.81,nonALA,Strand
+1PINA,S,38,A,Forward,7,40,0.05,ALA,None
+1PINA,S,38,G,Forward,7,40,-0.08,nonALA,None
+1PINA,T,29,A,Forward,7,40,-1.25,ALA,Turn
+1PINA,T,29,D,Forward,7,40,-1.33,nonALA,Turn
+1PINA,T,29,G,Forward,7,40,-1.99,nonALA,Turn
+1PINA,T,29,S,Forward,7,40,-0.65,nonALA,Turn
+1PINA,V,22,A,Forward,7,40,-0.26,ALA,Strand
+1PINA,W,11,F,Forward,7,40,-1.93,nonALA,Strand
+1PINA,W,34,A,Forward,7,40,-0.4,ALA,Bend
+1PINA,W,34,F,Forward,7,40,-0.1,nonALA,Bend
+1PINA,Y,23,A,Forward,7,40,-1.08,ALA,Strand
+1PINA,Y,23,F,Forward,7,40,-0.52,nonALA,Strand
+1PINA,Y,23,L,Forward,7,40,-1.18,nonALA,Strand
+1PINA,Y,24,F,Forward,7,40,-0.67,nonALA,Strand
+1PINA,Y,24,W,Forward,7,40,-0.56,nonALA,Strand
+1RGGA,D,17,K,Forward,7,25,-1.1,nonALA,Alpha Helix
+1RGGA,D,25,H,Forward,7,25,0.9,nonALA,Turn
+1RGGA,D,25,K,Forward,7,47.2,-0.9,nonALA,Turn
+1RGGA,D,79,A,Forward,3,38.6,-0.3,ALA,Strand
+1RGGA,D,79,A,Forward,8.5,45.9,3.3,ALA,Strand
+1RGGA,D,79,E,Forward,7,52.6,-0.3,nonALA,Strand
+1RGGA,D,79,F,Forward,3,38.6,-0.3,nonALA,Strand
+1RGGA,D,79,F,Forward,8.5,45.9,3.7,nonALA,Strand
+1RGGA,D,79,F,Forward,7,52.6,3,nonALA,Strand
+1RGGA,D,79,H,Forward,7,52.6,1.8,nonALA,Strand
+1RGGA,D,79,K,Forward,7,52.6,2.3,nonALA,Strand
+1RGGA,D,79,L,Forward,7,52.6,2.7,nonALA,Strand
+1RGGA,D,79,N,Forward,3,38.6,-1.2,nonALA,Strand
+1RGGA,D,79,N,Forward,8.5,45.9,2.3,nonALA,Strand
+1RGGA,D,79,N,Forward,7,52.6,1.8,nonALA,Strand
+1RGGA,D,79,R,Forward,7,52.6,2.7,nonALA,Strand
+1RGGA,D,79,W,Forward,7,52.6,2.3,nonALA,Strand
+1RGGA,D,79,Y,Forward,7,52.6,2.9,nonALA,Strand
+1RGGA,E,41,K,Forward,7,25,-1.2,nonALA,Turn
+1RGGA,E,41,K,Forward,7,49,-0.7,nonALA,Turn
+1RGGA,E,41,K,Forward,5.5,55.6,-1.5,nonALA,Turn
+1RGGA,E,54,Q,Forward,5.5,55.6,-2.3,nonALA,Strand
+1RGGA,E,74,K,Forward,7,25,1.1,nonALA,Bend
+1RGGA,E,74,K,Forward,7,47.2,-1.1,nonALA,Bend
+1RGGA,E,74,K,Forward,7,49,0.9,nonALA,Bend
+1RGGA,E,74,K,Forward,5.5,55.6,0.1,nonALA,Bend
+1RGGA,H,85,Q,Forward,7,49,0,nonALA,Turn
+1RGGA,H,85,Q,Forward,5.5,55.6,0,nonALA,Turn
+1RGGA,N,39,A,Forward,7,48.4,-2.2,ALA,None
+1RGGA,N,39,D,Forward,7,48.4,-1.5,nonALA,None
+1RGGA,N,39,S,Forward,7,48.4,-2.3,nonALA,None
+1RGGA,Q,38,A,Forward,7,49,1,ALA,None
+1RGGA,Q,38,A,Forward,5.5,55.6,0.4,ALA,None
+1RGGA,Q,94,K,Forward,3,38.6,0.2,nonALA,Turn
+1RGGA,Q,94,K,Forward,8.5,45.9,1.1,nonALA,Turn
+1RGGA,Q,94,K,Forward,7,52.6,0.3,nonALA,Turn
+1RGGA,R,65,A,Forward,7,49,-1,ALA,None
+1RGGA,R,65,A,Forward,5.5,55.6,-1.3,ALA,None
+1RGGA,T,16,V,Forward,7,48.4,0.3,nonALA,Alpha Helix
+1RGGA,T,18,V,Forward,7,48.4,-1.4,nonALA,Alpha Helix
+1RGGA,T,56,V,Forward,7,48.4,-1.9,nonALA,Strand
+1RGGA,T,59,V,Forward,7,48.4,-1.7,nonALA,None
+1RGGA,T,5,V,Forward,7,48.4,0,nonALA,Strand
+1RGGA,T,67,V,Forward,7,48.4,0,nonALA,Bend
+1RGGA,T,72,V,Forward,7,48.4,-0.2,nonALA,Strand
+1RGGA,T,82,V,Forward,7,48.4,-1.7,nonALA,Strand
+1RGGA,V,2,T,Forward,7,48.4,-0.9,nonALA,None
+1RGGA,V,36,T,Forward,7,48.4,-1.3,nonALA,Isolated beta-bridge
+1RGGA,V,43,T,Forward,7,48.4,-0.5,nonALA,None
+1RGGA,V,57,T,Forward,7,48.4,-4.4,nonALA,None
+1RGGA,Y,30,F,Forward,7,25,0.4,nonALA,Bend
+1RGGA,Y,49,F,Forward,7,25,-0.2,nonALA,Turn
+1RGGA,Y,51,F,Forward,7,25,-2.3,nonALA,Bend
+1RGGA,Y,52,F,Forward,7,25,-3.6,nonALA,None
+1RGGA,Y,55,F,Forward,7,25,-0.6,nonALA,Strand
+1RGGA,Y,80,F,Forward,7,25,-1.5,nonALA,Strand
+1RGGA,Y,81,F,Forward,7,25,-1.2,nonALA,Strand
+1RGGA,Y,86,F,Forward,7,25,-0.3,nonALA,Turn
+1RN1A,V,16,A,Forward,7,25,-2.19,ALA,Alpha Helix
+1RN1A,V,16,C,Forward,7,25,-4.68,nonALA,Alpha Helix
+1RN1A,V,16,S,Forward,7,25,-4.71,nonALA,Alpha Helix
+1RN1A,V,16,T,Forward,7,25,-4.1,nonALA,Alpha Helix
+1RN1A,V,78,T,Forward,7,25,-3.1,nonALA,Strand
+1ROPA,L,41,A,Forward,6,25,-6.12,ALA,Alpha Helix
+1ROPA,L,41,V,Forward,6,25,-2.53,nonALA,Alpha Helix
+1RROA,P,21,A,Forward,7.4,53.6,-0.74,ALA,Turn
+1RROA,P,26,A,Forward,7.4,53.6,-0.74,ALA,Alpha Helix
+1RTBA,A,4,S,Forward,7.1,61.4,-0.62,nonALA,Alpha Helix
+1RTBA,A,4,S,Forward,7,61.7,-0.57,nonALA,Alpha Helix
+1RTBA,A,4,S,Forward,7.1,62.8,-0.22,nonALA,Alpha Helix
+1RTBA,A,5,S,Forward,7.1,61.4,-0.52,nonALA,Alpha Helix
+1RTBA,A,5,S,Forward,7,61.7,-0.37,nonALA,Alpha Helix
+1RTBA,A,5,S,Forward,7.1,62.8,0.08,nonALA,Alpha Helix
+1RTBA,F,46,A,Forward,6,24.85,-6.36,ALA,Strand
+1RTBA,F,46,L,Forward,6,24.85,-3.21,nonALA,Strand
+1RTBA,F,46,V,Forward,6,24.85,-4.55,nonALA,Strand
+1RTBA,S,123,A,Forward,7.1,61.4,0.47,ALA,Strand
+1RTBA,S,123,A,Forward,7,61.7,0.46,ALA,Strand
+1RTBA,S,123,A,Forward,7.1,62.8,1.14,ALA,Strand
+1RTBA,S,75,A,Forward,7.4,61.1,-2.5,ALA,None
+1RTBA,S,75,T,Forward,7.4,61.1,-2.8,nonALA,None
+1RTBA,V,108,G,Forward,5,40,-7.29,nonALA,Strand
+1RTBA,V,47,G,Forward,5,40,-7.35,nonALA,Strand
+1RTBA,V,57,G,Forward,5,40,-5.52,nonALA,3-10 Helix
+1RTP1,A,21,P,Forward,7.4,44.2,0.95,nonALA,Turn
+1RTP1,A,21,P,Forward,7.4,45.8,-1.92,nonALA,Turn
+1RTP1,H,26,P,Forward,7.4,45.8,1.25,nonALA,Alpha Helix
+1SHGA,D,48,G,Forward,2,24.85,0.98,nonALA,Turn
+1SHGA,D,48,G,Forward,2.5,24.85,0.69,nonALA,Turn
+1SHGA,D,48,G,Forward,3,24.85,0.57,nonALA,Turn
+1SHGA,D,48,G,Forward,3.5,24.85,1.05,nonALA,Turn
+1STNA,S,141,A,Forward,7,40,-0.12,ALA,None
+1STNA,W,140,F,Forward,7,20,-0.6,nonALA,3-10 Helix
+1STNA,W,140,H,Forward,7,20,-0.4,nonALA,3-10 Helix
+1STNA,W,140,L,Forward,7,20,-4.5,nonALA,3-10 Helix
+1STNA,W,140,Y,Forward,7,20,-1.1,nonALA,3-10 Helix
+1VQBA,A,86,T,Forward,7,25,-0.7,nonALA,None
+1VQBA,A,86,V,Forward,7,25,0.5,nonALA,None
+1VQBA,C,33,A,Forward,7,25,-0.5,ALA,Strand
+1VQBA,C,33,I,Forward,7,25,-0.9,nonALA,Strand
+1VQBA,C,33,L,Forward,7,25,-2.6,nonALA,Strand
+1VQBA,C,33,M,Forward,7,25,-3.5,nonALA,Strand
+1VQBA,C,33,T,Forward,7,25,-4.6,nonALA,Strand
+1VQBA,C,33,V,Forward,7,25,-0.2,nonALA,Strand
+1VQBA,D,36,N,Forward,7,25,-1,nonALA,None
+1VQBA,E,30,N,Forward,7,25,-1.1,nonALA,Strand
+1VQBA,E,40,C,Forward,7,25,-1.6,nonALA,Bend
+1VQBA,E,40,T,Forward,7,25,-0.4,nonALA,Bend
+1VQBA,F,13,T,Forward,7,25,-0.7,nonALA,None
+1VQBA,F,68,V,Forward,7,25,-5,nonALA,Strand
+1VQBA,F,73,W,Forward,7,25,0.8,nonALA,Turn
+1VQBA,H,64,C,Forward,7,25,0.5,nonALA,None
+1VQBA,I,47,T,Forward,7,25,-7.4,nonALA,Strand
+1VQBA,I,6,V,Forward,7,25,-0.7,nonALA,Strand
+1VQBA,I,78,C,Forward,7,25,-4.4,nonALA,Strand
+1VQBA,I,78,T,Forward,7,25,-6.6,nonALA,Strand
+1VQBA,I,78,V,Forward,7,25,-1.3,nonALA,Strand
+1VQBA,K,24,V,Forward,7,25,0.8,nonALA,None
+1VQBA,L,28,V,Forward,7,25,1.1,nonALA,Strand
+1VQBA,L,32,H,Forward,7,25,-0.9,nonALA,Strand
+1VQBA,L,32,R,Forward,7,25,-1.6,nonALA,Strand
+1VQBA,L,32,W,Forward,7,25,2.8,nonALA,Strand
+1VQBA,L,32,Y,Forward,7,25,1,nonALA,Strand
+1VQBA,L,37,A,Forward,7,25,-7.7,ALA,None
+1VQBA,L,37,C,Forward,7,25,-4.6,nonALA,None
+1VQBA,L,37,I,Forward,7,25,-1.4,nonALA,None
+1VQBA,L,37,T,Forward,7,25,-5.2,nonALA,None
+1VQBA,L,37,V,Forward,7,25,-3.5,nonALA,None
+1VQBA,L,49,A,Forward,7,25,-6.1,ALA,None
+1VQBA,L,49,C,Forward,7,25,-4.1,nonALA,None
+1VQBA,L,49,I,Forward,7,25,-1.9,nonALA,None
+1VQBA,L,49,T,Forward,7,25,-5.7,nonALA,None
+1VQBA,L,49,V,Forward,7,25,-2.9,nonALA,None
+1VQBA,L,81,C,Forward,7,25,-3.7,nonALA,None
+1VQBA,L,81,T,Forward,7,25,-5.1,nonALA,None
+1VQBA,L,81,V,Forward,7,25,-0.2,nonALA,None
+1VQBA,M,77,A,Forward,7,25,-2.1,ALA,Strand
+1VQBA,M,77,F,Forward,7,25,-0.2,nonALA,Strand
+1VQBA,M,77,I,Forward,7,25,1.6,nonALA,Strand
+1VQBA,M,77,L,Forward,7,25,-1.2,nonALA,Strand
+1VQBA,M,77,T,Forward,7,25,-0.8,nonALA,Strand
+1VQBA,M,77,V,Forward,7,25,1.2,nonALA,Strand
+1VQBA,R,82,C,Forward,7,25,-1.5,nonALA,None
+1VQBA,S,67,C,Forward,7,25,-3.7,nonALA,3-10 Helix
+1VQBA,S,67,T,Forward,7,25,-1.6,nonALA,3-10 Helix
+1VQBA,T,48,C,Forward,7,25,-0.8,nonALA,Strand
+1VQBA,T,62,C,Forward,7,25,-0.7,nonALA,Strand
+1VQBA,T,62,V,Forward,7,25,1.3,nonALA,Strand
+1VQBA,V,19,C,Forward,7,25,-0.3,nonALA,Strand
+1VQBA,V,19,T,Forward,7,25,-0.6,nonALA,Strand
+1VQBA,V,35,A,Forward,7,25,-2.2,ALA,Strand
+1VQBA,V,35,C,Forward,7,25,-1.4,nonALA,Strand
+1VQBA,V,35,L,Forward,7,25,-2.7,nonALA,Strand
+1VQBA,V,35,T,Forward,7,25,-5.3,nonALA,Strand
+1VQBA,V,43,C,Forward,7,25,-2.1,nonALA,Strand
+1VQBA,V,43,T,Forward,7,25,-1.6,nonALA,Strand
+1VQBA,V,45,A,Forward,7,25,-2.1,ALA,Strand
+1VQBA,V,45,C,Forward,7,25,-0.1,nonALA,Strand
+1VQBA,V,45,L,Forward,7,25,-3,nonALA,Strand
+1VQBA,V,45,T,Forward,7,25,-3.5,nonALA,Strand
+1VQBA,V,63,C,Forward,7,25,-4.1,nonALA,Strand
+1VQBA,V,63,T,Forward,7,25,-5,nonALA,Strand
+1VQBA,V,70,T,Forward,7,25,-3.5,nonALA,Strand
+1VQBA,Y,26,R,Forward,7,25,-0.4,nonALA,Strand
+1VQBA,Y,41,A,Forward,7,25,-0.4,ALA,Bend
+1VQBA,Y,41,F,Forward,7,25,-0.6,nonALA,Bend
+1WQ5A,E,49,A,Forward,7,25,-0.08,ALA,Strand
+1WQ5A,E,49,A,Forward,9,25,0.59,ALA,Strand
+1WQ5A,E,49,C,Forward,7,25,0.01,nonALA,Strand
+1WQ5A,E,49,C,Forward,9,25,-0.13,nonALA,Strand
+1WQ5A,E,49,D,Forward,7,25,-0.8,nonALA,Strand
+1WQ5A,E,49,D,Forward,9,25,-0.03,nonALA,Strand
+1WQ5A,E,49,F,Forward,7,25,-0.86,nonALA,Strand
+1WQ5A,E,49,F,Forward,9,25,-0.02,nonALA,Strand
+1WQ5A,E,49,G,Forward,7,25,0.08,nonALA,Strand
+1WQ5A,E,49,G,Forward,9,25,0.6,nonALA,Strand
+1WQ5A,E,49,H,Forward,7,25,0.33,nonALA,Strand
+1WQ5A,E,49,H,Forward,9,25,0.67,nonALA,Strand
+1WQ5A,E,49,I,Forward,7,25,0.46,nonALA,Strand
+1WQ5A,E,49,I,Forward,9,25,1.24,nonALA,Strand
+1WQ5A,E,49,K,Forward,7,25,0.2,nonALA,Strand
+1WQ5A,E,49,K,Forward,9,25,0.39,nonALA,Strand
+1WQ5A,E,49,L,Forward,7,25,0.44,nonALA,Strand
+1WQ5A,E,49,L,Forward,9,25,1.04,nonALA,Strand
+1WQ5A,E,49,M,Forward,7,25,-0.05,nonALA,Strand
+1WQ5A,E,49,M,Forward,9,25,0.52,nonALA,Strand
+1WQ5A,E,49,N,Forward,7,25,-0.69,nonALA,Strand
+1WQ5A,E,49,N,Forward,9,25,0.27,nonALA,Strand
+1WQ5A,E,49,P,Forward,7,25,0,nonALA,Strand
+1WQ5A,E,49,P,Forward,9,25,0.8,nonALA,Strand
+1WQ5A,E,49,Q,Forward,7,25,-0.23,nonALA,Strand
+1WQ5A,E,49,Q,Forward,9,25,0.54,nonALA,Strand
+1WQ5A,E,49,S,Forward,7,25,-0.59,nonALA,Strand
+1WQ5A,E,49,S,Forward,9,25,0.09,nonALA,Strand
+1WQ5A,E,49,T,Forward,7,25,-0.62,nonALA,Strand
+1WQ5A,E,49,T,Forward,9,25,-0.26,nonALA,Strand
+1WQ5A,E,49,V,Forward,7,25,0.14,nonALA,Strand
+1WQ5A,E,49,V,Forward,9,25,1.01,nonALA,Strand
+1WQ5A,E,49,W,Forward,7,25,-0.97,nonALA,Strand
+1WQ5A,E,49,W,Forward,9,25,-1.1,nonALA,Strand
+1WQ5A,E,49,Y,Forward,7,25,-0.17,nonALA,Strand
+1WQ5A,E,49,Y,Forward,9,25,0.26,nonALA,Strand
+1WQ5A,G,211,E,Forward,7.8,57.8,0.6,nonALA,Strand
+1WQ5A,G,211,R,Forward,7.8,57.8,0.1,nonALA,Strand
+1WQ5A,P,132,A,Forward,9,54.1,-0.92,ALA,None
+1WQ5A,P,132,G,Forward,9,54.1,-0.78,nonALA,None
+1WQ5A,P,207,A,Forward,9,54.1,-1.64,ALA,None
+1WQ5A,P,96,A,Forward,9,54.1,-2,ALA,None
+2ABDA,A,34,G,Forward,5.3,5,-1.57,nonALA,Alpha Helix
+2ABDA,A,9,G,Forward,5.3,5,-1.81,nonALA,Alpha Helix
+2ABDA,D,21,A,Forward,5.3,5,0.42,ALA,Alpha Helix
+2ABDA,E,67,A,Forward,5.3,5,-0.36,ALA,Alpha Helix
+2ABDA,F,5,A,Forward,5.3,5,-2.52,ALA,Alpha Helix
+2ABDA,K,32,A,Forward,5.3,5,-1.02,ALA,Alpha Helix
+2ABDA,K,32,E,Forward,5.3,5,-1.68,nonALA,Alpha Helix
+2ABDA,K,52,M,Forward,5.3,5,0.18,nonALA,Alpha Helix
+2ABDA,K,54,A,Forward,5.3,5,-0.86,ALA,Alpha Helix
+2ABDA,K,54,M,Forward,5.3,5,0.27,nonALA,Alpha Helix
+2ABDA,L,15,A,Forward,5.3,5,-3.1,ALA,None
+2ABDA,L,25,A,Forward,5.3,5,-1.02,ALA,Alpha Helix
+2ABDA,L,80,A,Forward,5.3,5,-3.7,ALA,Alpha Helix
+2ABDA,Q,33,A,Forward,5.3,5,-3.66,ALA,Alpha Helix
+2ABDA,T,35,A,Forward,5.3,5,-1.09,ALA,Alpha Helix
+2ABDA,V,12,A,Forward,5.3,5,-1.69,ALA,Alpha Helix
+2ABDA,V,77,A,Forward,5.3,5,-1.14,ALA,Alpha Helix
+2ABDA,Y,28,A,Forward,5.3,5,-2.47,ALA,Alpha Helix
+2ABDA,Y,28,F,Forward,5.3,5,-1.06,nonALA,Alpha Helix
+2ABDA,Y,28,N,Forward,5.3,5,-2.23,nonALA,Alpha Helix
+2ABDA,Y,31,N,Forward,5.3,5,-1.52,nonALA,Alpha Helix
+2ABDA,Y,73,A,Forward,5.3,5,-4.83,ALA,Alpha Helix
+2ABDA,Y,73,F,Forward,5.3,5,0.27,nonALA,Alpha Helix
+2AFGA,C,117,S,Forward,6.6,25,-0.62,nonALA,Isolated beta-bridge
+2AFGA,C,117,S,Forward,6.6,39.45,-0.26,nonALA,Isolated beta-bridge
+2AFGA,C,83,S,Forward,6.6,25,-1.91,nonALA,3-10 Helix
+2AFGA,F,108,Y,Forward,7.3,39.8,0.33,nonALA,Isolated beta-bridge
+2AFGA,F,108,Y,Forward,7.3,40.7,0.33,nonALA,Isolated beta-bridge
+2AFGA,H,102,Y,Forward,7.3,39.8,0.4,nonALA,Turn
+2AFGA,H,102,Y,Forward,7.3,40.7,0.1,nonALA,Turn
+2AFGA,H,21,Y,Forward,7.3,39.8,0.75,nonALA,Strand
+2AFGA,H,21,Y,Forward,7.3,40.7,0.38,nonALA,Strand
+2AFGA,H,93,G,Forward,6.6,25,0.55,nonALA,Bend
+2AFGA,H,93,G,Forward,6.6,39.45,1.6,nonALA,Bend
+2AFGA,L,44,F,Forward,7.3,39.8,0.31,nonALA,Strand
+2AFGA,L,44,F,Forward,7.3,40.7,0.47,nonALA,Strand
+2AFGA,V,109,I,Forward,7.3,39.8,-0.08,nonALA,None
+2AFGA,V,109,I,Forward,7.3,40.7,-0.11,nonALA,None
+2CI2I,A,77,G,Forward,6.3,25,-1.88,nonALA,None
+2CI2I,E,60,A,Forward,6.3,25,-0.68,ALA,None
+2CI2I,I,49,G,Forward,6.3,25,-3.52,nonALA,Strand
+2CI2I,I,49,T,Forward,6.3,25,-1.34,nonALA,Strand
+2CI2I,T,22,G,Forward,6.3,25,-1.16,nonALA,None
+2CI2I,T,22,V,Forward,6.3,25,-0.32,nonALA,None
+2CI2I,T,58,D,Forward,6.3,25,0.04,nonALA,None
+2CI2I,V,53,G,Forward,6.3,25,-2.43,nonALA,Turn
+2CI2I,V,79,A,Forward,6.3,25,-1.51,ALA,None
+2CI2I,V,79,G,Forward,6.3,25,-3.24,nonALA,None
+2CI2I,V,79,T,Forward,6.3,25,-0.38,nonALA,None
+2CI2I,V,82,A,Forward,6.3,25,-1.45,ALA,Strand
+2CI2I,V,82,G,Forward,6.3,25,-3.5,nonALA,Strand
+2CI2I,V,82,T,Forward,6.3,25,-1.15,nonALA,Strand
+2DRIA,A,188,C,Forward,7.6,25,-1.8,nonALA,Strand
+2DRIA,L,62,C,Forward,7.6,25,-2.7,nonALA,Strand
+2HPRA,S,46,D,Forward,7,73.6,0.7,nonALA,None
+2LZMA,D,89,A,Forward,3.05,44,-0.7,ALA,Alpha Helix
+2LZMA,D,89,A,Forward,5.35,58,-0.5,ALA,Alpha Helix
+2LZMA,E,108,V,Forward,3.02,51.6,1.4,nonALA,Alpha Helix
+2LZMA,G,28,A,Forward,3.02,51.6,-2,ALA,Strand
+2LZMA,I,100,V,Forward,5.35,61,-0.4,nonALA,Alpha Helix
+2LZMA,I,78,V,Forward,5.35,61,-0.8,nonALA,Alpha Helix
+2LZMA,K,85,A,Forward,3.05,44,0.1,ALA,Alpha Helix
+2LZMA,K,85,A,Forward,5.35,58,-0.6,ALA,Alpha Helix
+2LZMA,L,118,I,Forward,5.35,61,-1.2,nonALA,Alpha Helix
+2LZMA,L,133,F,Forward,5.35,61,-0.3,nonALA,Alpha Helix
+2LZMA,M,102,L,Forward,5.35,61,-1,nonALA,Alpha Helix
+2LZMA,M,106,I,Forward,5.35,61,0.2,nonALA,Alpha Helix
+2LZMA,M,120,Y,Forward,5.35,61,-0.1,nonALA,Alpha Helix
+2LZMA,N,68,A,Forward,2.5,47.8,-0.05,ALA,Alpha Helix
+2LZMA,R,119,E,Forward,5.3,25,0,nonALA,Alpha Helix
+2LZMA,R,96,A,Forward,3.05,44,-2,ALA,Alpha Helix
+2LZMA,R,96,A,Forward,5.35,58,-2,ALA,Alpha Helix
+2LZMA,R,96,C,Forward,3.05,44,-2.9,nonALA,Alpha Helix
+2LZMA,R,96,C,Forward,5.35,58,-2.9,nonALA,Alpha Helix
+2LZMA,R,96,D,Forward,3.05,44,-2.3,nonALA,Alpha Helix
+2LZMA,R,96,D,Forward,5.35,58,-3.5,nonALA,Alpha Helix
+2LZMA,R,96,E,Forward,3.05,44,-1.9,nonALA,Alpha Helix
+2LZMA,R,96,E,Forward,5.35,58,-2.5,nonALA,Alpha Helix
+2LZMA,R,96,F,Forward,3.05,44,-4.2,nonALA,Alpha Helix
+2LZMA,R,96,F,Forward,5.35,58,-4.2,nonALA,Alpha Helix
+2LZMA,R,96,G,Forward,3.05,44,-3.2,nonALA,Alpha Helix
+2LZMA,R,96,G,Forward,5.35,58,-2.6,nonALA,Alpha Helix
+2LZMA,R,96,H,Forward,3.05,44,-3.8,nonALA,Alpha Helix
+2LZMA,R,96,H,Forward,5.35,58,-3.1,nonALA,Alpha Helix
+2LZMA,R,96,I,Forward,3.05,44,-2.8,nonALA,Alpha Helix
+2LZMA,R,96,I,Forward,5.35,58,-2.9,nonALA,Alpha Helix
+2LZMA,R,96,K,Forward,3.05,44,-0.5,nonALA,Alpha Helix
+2LZMA,R,96,K,Forward,5.35,58,0,nonALA,Alpha Helix
+2LZMA,R,96,L,Forward,3.05,44,-3.2,nonALA,Alpha Helix
+2LZMA,R,96,L,Forward,5.35,58,-3.2,nonALA,Alpha Helix
+2LZMA,R,96,M,Forward,3.05,44,-2.5,nonALA,Alpha Helix
+2LZMA,R,96,M,Forward,5.35,58,-2.7,nonALA,Alpha Helix
+2LZMA,R,96,N,Forward,3.05,44,-3.3,nonALA,Alpha Helix
+2LZMA,R,96,N,Forward,5.35,58,-3,nonALA,Alpha Helix
+2LZMA,R,96,P,Forward,3.05,44,-6,nonALA,Alpha Helix
+2LZMA,R,96,P,Forward,5.35,58,-5.5,nonALA,Alpha Helix
+2LZMA,R,96,Q,Forward,3.05,44,-0.7,nonALA,Alpha Helix
+2LZMA,R,96,Q,Forward,5.35,58,-0.3,nonALA,Alpha Helix
+2LZMA,R,96,S,Forward,3.05,44,-2.8,nonALA,Alpha Helix
+2LZMA,R,96,S,Forward,5.35,58,-2.6,nonALA,Alpha Helix
+2LZMA,R,96,T,Forward,3.05,44,-3.1,nonALA,Alpha Helix
+2LZMA,R,96,T,Forward,5.35,58,-2.8,nonALA,Alpha Helix
+2LZMA,R,96,V,Forward,3.05,44,-2.5,nonALA,Alpha Helix
+2LZMA,R,96,V,Forward,5.35,58,-2.4,nonALA,Alpha Helix
+2LZMA,R,96,W,Forward,3.05,44,-4.2,nonALA,Alpha Helix
+2LZMA,R,96,W,Forward,5.35,58,-4.5,nonALA,Alpha Helix
+2LZMA,R,96,Y,Forward,3.05,44,-4.5,nonALA,Alpha Helix
+2LZMA,R,96,Y,Forward,5.35,58,-4.7,nonALA,Alpha Helix
+2LZMA,S,44,A,Forward,2.5,47.8,-0.44,ALA,Alpha Helix
+2LZMA,V,103,I,Forward,5.35,61,-0.5,nonALA,Alpha Helix
+2LZMA,V,111,A,Forward,5.35,61,-1.1,ALA,Alpha Helix
+2LZMA,V,149,I,Forward,5.35,61,0,nonALA,Alpha Helix
+2LZMA,V,87,I,Forward,5.35,61,-0.3,nonALA,Alpha Helix
+2RN2A,A,52,F,Forward,3.2,53,0.5,nonALA,Alpha Helix
+2WSYA,A,18,G,Forward,7.8,25,-1.5,nonALA,Strand
+3MBPA,A,276,G,Forward,7.6,25,-1.5,nonALA,Alpha Helix
+3MBPA,D,55,N,Forward,7.6,25,0,nonALA,None
+3MBPA,G,19,C,Forward,7.6,25,-2.3,nonALA,Alpha Helix
+3MBPA,P,133,A,Forward,7.4,63,-0.3,ALA,Alpha Helix
+3MBPA,P,133,S,Forward,7.4,63,-2.1,nonALA,Alpha Helix
+3MBPA,P,159,A,Forward,7.4,63,-1.8,ALA,Alpha Helix
+3MBPA,P,159,S,Forward,7.4,63,-2.1,nonALA,Alpha Helix
+3MBPA,P,48,A,Forward,7.4,63,0.5,ALA,Alpha Helix
+3MBPA,P,48,S,Forward,7.4,63,0.3,nonALA,Alpha Helix
+3MBPA,T,345,I,Forward,7.6,25,0.7,nonALA,Alpha Helix
+3MBPA,V,8,G,Forward,7.6,25,-1.1,nonALA,Strand
+3MBPA,Y,283,D,Forward,7.6,25,-3.2,nonALA,Pi Helix
