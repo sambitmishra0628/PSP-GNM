@@ -125,6 +125,19 @@ python psp_gnm.py --data_file ../test_data/S350_test_benchmark_run.csv --outdir 
 
 In the above:
   `num_jobs` is the number of parallel jobs you intend to run. Ideally, it should be set to the number of cores in your machine (N) - 1. This run will create an output directory `S350_test_run_output` and store all the intermediate files containing information on the contacts broken during partial unfolding. It will then create S350_test_benchmark_run_out.csv containing the calculated ddG values.
+  
+
+The `data_file` should atleast include the following columns (the column names should exactly match as given below)
+
+| Column Name  | Expected value|
+| ------------- | ------------- |
+| PDB_CHAIN  | The 4-lettered PDB ID + Chain ID (e.g., 1AJ3A, 1AONU) (Case-sensitive)  |
+| WILD_RES  | The single amino acid alphabet of the wildtype residue in the PDB file (Case-sensitive) |
+| RES_NUM_PDB  | The PDB residue number for the mutation position  |
+| MUTANT_RES  | The single amino acid alphabet of the variant/mutant residue (Case-sensitive)|
+| Category  | Should be one of Forward or Reverse (case-sensitive)  |
+
+
 
 
 
