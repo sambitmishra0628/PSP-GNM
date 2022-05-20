@@ -117,7 +117,7 @@ You will need access to a Linux machine (or a MacOS or Windows 10 with Windows S
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Before running **make sure that your current working directory is the PSP_GNM/scripts directory.**
+Before running **make sure that your current working directory is the `PSP_GNM/scripts/` directory.**
 
 ```
 python psp_gnm.py --data_file ../test_data/S350_test_benchmark_run.csv --outdir ../S350_test_run_output --outfile ../S350_test_benchmark_run_out.csv --wt_pdb_dir ../test_data/pdb_test --num_jobs 4 --dist_cutoff 9 --num_modes 10
