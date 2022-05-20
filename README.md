@@ -148,7 +148,7 @@ In the above:
 | Calc_ddI  | The raw calculated entropy difference between wildtype and mutant. The entropy difference is measured as the difference in mean-squared fluctuation in distance. |
 | Calc_ddG_mean  | The average calculated energy difference between wildtype and mutant. Averaged across all residues considered for calculations.|
 | Calc_ddI_mean  | The average calculated entropy difference between wildtype and mutant. Averaged across all residues considered for calculations.|
-| Num_contacts  | Total contacts broken during partial unfolding that involve the mutation residue and are considered for calculations. We suggest considering only those calculations having Num_contacts > 0.|
+| Num_contacts  | Total contacts broken during partial unfolding involving the mutation residue and considered for calculations. We suggest considering only those calculations having Num_contacts > 0.|
 | Calc_Energy_scaled  | The scaled values for Calc_ddG   |
 | Calc_Entropy_scaled  | The scaled values for Calc_ddI  |
 | ddG_PSP_GNM  | The final prediction for ddG that is scaled and incorporates both energy and entropy changes   |
