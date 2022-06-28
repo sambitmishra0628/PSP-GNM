@@ -22,6 +22,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <li><a href="#Specific-use-cases">Specific use cases</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#Citation">Citation</a></li>
@@ -139,6 +140,8 @@ In the above:
 | Category  | Should be one of Forward or Reverse (case-sensitive)  |
 <br>
 
+In the above, it is expected that position `RES_NUM_PDB` in the PDB file includes the residue given by `WILD_RES`.
+
   - The output file `S350_test_benchmark_run_out.csv` will include the calculated ddG. Note that this output file will include all the columns present in the data file. Additionally, it will have the columns corresponding to calculations made by PSP-GNM. Explanation of the different output columns are as follows.
 
 | Column Name  | Explanation |
@@ -153,6 +156,11 @@ In the above:
 | Calc_Entropy_scaled  | The scaled values for Calc_ddI  |
 | ddG_PSP_GNM  | The final prediction for ddG that is scaled and incorporates both energy and entropy changes   |
 
+
+
+## Specific use cases
+
+1. Predicting ddG for reverse mutants using the structure of the native wildtype 
 
 
 <!-- LICENSE -->
