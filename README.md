@@ -160,28 +160,20 @@ In the above, it is expected that position `RES_NUM_PDB` in the PDB file include
 
 ## Use cases
 
-1. <b> Predicting ddG for reverse mutants using the structure of the native wildtype </b>
+<b> 1. Predicting ddG for reverse mutants using the structure of the native wildtype </b>
  
-For PDB ID 1AJ3, chain A (wildtype PDB) the wildtype residue at position 18 is ASP. Let us assume a theoretical mutant form of this protein that has PHE at position 18. The forward mutant then is ASP18 -> PHE18 and the reverse mutant is PHE18 -> ASP18. If you want to test the antisymmetric property (ΔG_forward mutant = -ΔG_reverse mutant) of PSP-GNM, then use the following instance of the `--data_file` to calculate ΔΔG of the forward mutant.
+For PDB ID 1AJ3 and chain A (wildtype PDB), the wildtype residue at position 18 is ASP. Let us assume a theoretical mutant form of this protein that has PHE at position 18. The forward mutant then is ASP18 -> PHE18 and the reverse mutant is PHE18 -> ASP18. If you want to test the antisymmetric property (ΔΔG_forward mutant = -ΔΔG_reverse mutant) of PSP-GNM, then use the following instance of the `--data_file` to calculate ΔΔG of the forward mutant.
 
-| Column Name  | Expected value|
-| ------------- | ------------- |
-| PDB_CHAIN  | 1AJ3A  |
-| WILD_RES  | D |
-| RES_NUM_PDB  | 18  |
-| MUTANT_RES  | F|
-| Category  | Forward  |
+| PDB_CHAIN  | WILD_RES| RES_NUM_PDB | MUTANT_RES | Category |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| 1AJ3A  | D | 18 | F | Forward |
 
 
-You can also calculate the ΔΔG of the reverse mutant using the same PDB file having the following content in the `--data_file`
+You can then calculate the ΔΔG of the reverse mutant using the same PDB file having the following content in the `--data_file`
 
-| Column Name  | Expected value|
-| ------------- | ------------- |
-| PDB_CHAIN  | 1AJ3A  |
-| WILD_RES  | F |
-| RES_NUM_PDB  | 18  |
-| MUTANT_RES  | D|
-| Category  | Reverse  |
+| PDB_CHAIN  | WILD_RES| RES_NUM_PDB | MUTANT_RES | Category |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| 1AJ3A  | F | 18 | D | Reverse |
 
 
 <!-- LICENSE -->
