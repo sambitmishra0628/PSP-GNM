@@ -22,7 +22,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#Specific-use-cases">Specific use cases</a></li>
+    <li><a href="#Use-cases">Use cases</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#Citation">Citation</a></li>
@@ -158,9 +158,30 @@ In the above, it is expected that position `RES_NUM_PDB` in the PDB file include
 
 
 
-## Specific use cases
+## Use cases
 
-1. Predicting ddG for reverse mutants using the structure of the native wildtype 
+1. <b> Predicting ddG for reverse mutants using the structure of the native wildtype </b>
+ 
+For PDB ID 1AJ3, chain A (wildtype PDB) the wildtype residue at position 18 is ASP. Let us assume a theoretical mutant form of this protein that has PHE at position 18. The forward mutant then is ASP18 -> PHE18 and the reverse mutant is PHE18 -> ASP18. If you want to test the antisymmetric property (ΔG_forward mutant = -ΔG_reverse mutant) of PSP-GNM, then use the following instance of the `--data_file` to calculate ΔΔG of the forward mutant.
+
+| Column Name  | Expected value|
+| ------------- | ------------- |
+| PDB_CHAIN  | 1AJ3A  |
+| WILD_RES  | D |
+| RES_NUM_PDB  | 18  |
+| MUTANT_RES  | F|
+| Category  | Forward  |
+
+
+You can also calculate the ΔΔG of the reverse mutant using the same PDB file having the following content in the `--data_file`
+
+| Column Name  | Expected value|
+| ------------- | ------------- |
+| PDB_CHAIN  | 1AJ3A  |
+| WILD_RES  | F |
+| RES_NUM_PDB  | 18  |
+| MUTANT_RES  | D|
+| Category  | Reverse  |
 
 
 <!-- LICENSE -->
