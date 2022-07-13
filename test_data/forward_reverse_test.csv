@@ -1,0 +1,9 @@
+﻿PDB_CHAIN,WILD_RES,RES_NUM_PDB,MUTANT_RES,Category,PH,TEMPERATURE
+1bniA,I,96,A,Forward,6.3,25
+1brkA,A,96,I,Forward,6.3,25
+1lz1A,V,110,F,Forward,2.7,65
+1gbzA,F,110,V,Forward,2.7,65
+1vqbA,I,47,L,Forward,7.1,25
+1vqgA,L,47,I,Forward,7.1,25
+1vqbA,I,47,M,Forward,7.1,25
+1vqhA,M,47,I,Forward,7.1,25
