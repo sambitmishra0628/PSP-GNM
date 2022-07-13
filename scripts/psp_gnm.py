@@ -1,4 +1,28 @@
 """
+MIT License
+
+Copyright (c) 2022 Sambit Kumar Mishra
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+"""
+
+"""
 Protein stability change upon point mutations using a weighted Gaussian network model
 
 Key steps:
@@ -1022,7 +1046,9 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
         df_output_all_fw['Calc_Entropy_scaled'] = np.array(list(df_output_all_fw['Calc_ddI'])) * coeff_calc_ddi + intercept_calc_ddi               
         calc_ddG_unscaled = -(df_output_all_fw['Calc_ddG']-df_output_all_fw['Calc_ddI'])
         ddG_PSP_GNM_fw = np.array(list(calc_ddG_unscaled))*coeff + intercept
-        df_output_all_fw['ddG_PSP_GNM'] = ddG_PSP_GNM_fw
+        df_output_all_fw['ddG_PSP_GNM_unscaled'] = list(calc_ddG_unscaled)
+        df_output_all_fw['ddG_PSP_GNM_scaled'] = ddG_PSP_GNM_fw
+        
 
     # Scale the calculated ddG for the reverse mutations
     df_output_all_rev = df_output_all.copy()
@@ -1064,7 +1090,9 @@ def run_ab_initio_stability_prediction_wrapper(data_file, outfile, outdir, wt_pd
         df_output_all_rev['Calc_Entropy_scaled'] = np.array(list(df_output_all_rev['Calc_ddI'])) * coeff_calc_ddi + intercept_calc_ddi
         calc_ddG_unscaled = -(df_output_all_rev['Calc_ddG']-df_output_all_rev['Calc_ddI'])
         ddG_PSP_GNM_rev = np.array(list(calc_ddG_unscaled))*coeff + intercept
-        df_output_all_rev['ddG_PSP_GNM'] = ddG_PSP_GNM_rev
+        df_output_all_rev['ddG_PSP_GNM_unscaled'] = list(calc_ddG_unscaled)
+        df_output_all_rev['ddG_PSP_GNM_scaled'] = ddG_PSP_GNM_rev
+        
 
         
     if len(df_output_all_fw) > 0 and len(df_output_all_rev) > 0:
