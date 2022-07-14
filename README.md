@@ -154,7 +154,8 @@ In the above, it is expected that position `RES_NUM_PDB` in the PDB file include
 | Num_contacts  | Total contacts broken during partial unfolding involving the mutation residue and considered for calculations. We suggest considering only those calculations having Num_contacts > 0.|
 | Calc_Energy_scaled  | The scaled values for Calc_ddG   |
 | Calc_Entropy_scaled  | The scaled values for Calc_ddI  |
-| ddG_PSP_GNM  | The final prediction for ddG that is scaled and incorporates both energy and entropy changes   |
+| ddG_PSP_GNM_unscaled  | The unscaled prediction for ddG that is scaled and incorporates both energy and entropy changes   |
+| ddG_PSP_GNM_scaled  | The scaled prediction for ddG that incorporates both energy and entropy changes. This value is meaningless if the user is not sure of the category of mutation. If that's the case, then use the unscaled values.  |
 
 
 
