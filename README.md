@@ -203,5 +203,5 @@ Project Link: [PSP-GNM](https://github.com/sambitmishra0628/PSP-GNM)
 
 <!-- CITATION -->
 ## Citation
-This work has been submitted to a peer-review journal and is currently under review. Please refer to the preprint on BioRxiv (https://www.biorxiv.org/content/10.1101/2022.02.17.480818v2).
+This work has been submitted to a peer-review journal and is currently under review.
 
