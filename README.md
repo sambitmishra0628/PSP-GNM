@@ -204,5 +204,5 @@ Project Link: [PSP-GNM](https://github.com/sambitmishra0628/PSP-GNM)
 
 <!-- CITATION -->
 ## Citation
-This work has been submitted to a peer-review journal and is currently under review.
+Mishra, S.K. PSP-GNM: Predicting Protein Stability Changes upon Point Mutations with a Gaussian Network Model. Int. J. Mol. Sci. 2022, 23, 10711. https://doi.org/10.3390/ijms231810711
 
