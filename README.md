@@ -1,6 +1,7 @@
 
 # Protein Stability Prediction with a Gaussian Network Model <br> (PSP-GNM)
 
+![PSP-GNM outline](./Github_image.png)
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
