@@ -138,7 +138,7 @@ In the above:
 | WILD_RES  | The single amino acid alphabet of the wildtype residue in the PDB file (Case-sensitive) |
 | RES_NUM_PDB  | The PDB residue number for the mutation position  |
 | MUTANT_RES  | The single amino acid alphabet of the variant/mutant residue (Case-sensitive)|
-| Category  | Should be one of Forward or Reverse (case-sensitive)  |
+| Category  | Should be one of Forward or Reverse (case-sensitive). If unsure, then use Forward and then use the value under column ddG_PSP_GNM_unscaled in the output file for your analysis. |
 <br>
 
 In the above, it is expected that position `RES_NUM_PDB` in the PDB file includes the residue given by `WILD_RES`.
