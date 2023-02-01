@@ -130,7 +130,7 @@ In the above:
   
   - The above run will create an output directory `S350_test_run_output`, where all the intermediate files containing information on the contacts broken during partial unfolding will be stored.
   
-  - The `data_file` should atleast include the following columns (the column names should exactly match as given below)
+  - The `data_file` should have **comma separated values** and at least include the following columns (the column names should exactly match as given below)
 
 | Column Name  | Expected value|
 | ------------- | ------------- |
