@@ -141,7 +141,7 @@ In the above:
 | Category  | Should be one of Forward or Reverse (case-sensitive). If unsure, then use Forward and then use the value under column ddG_PSP_GNM_unscaled in the output file for your analysis. |
 <br>
 
-In the above, it is expected that position `RES_NUM_PDB` in the PDB file includes the residue given by `WILD_RES`.
+In the above, it is expected that position `RES_NUM_PDB` in the PDB file has the residue given by `WILD_RES`.
 
   - The output file `S350_test_benchmark_run_out.csv` will include the calculated ddG. Note that this output file will include all the columns present in the data file. Additionally, it will have the columns corresponding to calculations made by PSP-GNM. Explanation of the different output columns are as follows.
 
@@ -158,6 +158,42 @@ In the above, it is expected that position `RES_NUM_PDB` in the PDB file include
 | ddG_PSP_GNM_unscaled  | The unscaled prediction for ddG that incorporates both energy and entropy changes   |
 | ddG_PSP_GNM_scaled  | The scaled prediction for ddG that incorporates both energy and entropy changes. This value is meaningless if the user is not sure of the category of mutation. If that's the case, then use the unscaled values.  |
 
+- The output directory will include *_contact_breaks.csv files. These files include information on the contacts broken during the partial unfolding simulation. A separate contact_break file will be created for each mutant listed in the S350_test_benchmark_run.csv file and its corresponding wildtype. For example, the 2nd row of the S350_test_benchmark_run.csv includes the following mutant.
+
+|PDB_CHAIN | WILD_RES | RES_NUM_PDB | MUTANT_RES | Category|
+|----------|----------|-------------|------------|---------|
+|1AJ3A |I | 23 | A| Forward |
+
+In the above case, the PDB ID is 1AJ3, the chain is A, wildtype residue is I, mutant residue is A and the position of mutation (according to the PDB file) is 23. The resulting contact_break file created during the unfolding simulation of the mutant form is 1AJ3A_I23A_contact_breaks.csv and the wildtype is 1AJ3A_wt_contact_breaks.csv. The first few rows for 1AJ3A_wt_contact_breaks.csv are shown below.
+
+|PDB_ID|WT_or_Mut|Mutation_position|Contact_Position|Res_at_Mut_Position|Res_at_Contact_Pos|Energy_MJ|Int_dist_change|Contact_break_rank|
+|------|---------|-----------------|----------------|-------------------|------------------|---------|---------------|------------------|
+|1AJ3A|wt|17|88|K|L|-3.37|2.355|1|
+|1AJ3A|wt|88|17|L|K|-3.37|2.355|1|
+|1AJ3A|wt|46|89|L|K|-3.37|2.301|2|
+|1AJ3A|wt|89|46|K|L|-3.37|2.301|2|
+|1AJ3A|wt|39|92|H|A|-2.41|2.305|3|
+|1AJ3A|wt|92|39|A|H|-2.41|2.305|3|
+|1AJ3A|wt|39|93|H|A|-2.41|2.308|4|
+|1AJ3A|wt|93|39|A|H|-2.41|2.308|4|
+
+*In the above, note that there are duplicate rows for the same broken contact (e.g., 17 and 88). In the present version of the code, only the unique broken contacts are retained for ΔΔG calculation. A newer version of the code will be released to output only the unique rows in the \*_contact_breaks file.*
+
+An explanation of each column in the table above is as follows. 
+
+| Column Name | Explanation |
+|-------------|-------------|
+| PDB_ID | Name of the 4-lettered PDB ID with chain |
+| WT_of_Mut | Whether the simulation was carried out for the wildtype (wt) or the mutant form |
+| Mutation_postion | This is  the sequential index (not the PDB residue number) of the first residue in the contact pair|
+| Contact_position | This is just the sequential index (not the PDB residue number) of the second residue in the contact pair | 
+| Res_at_Mut_Position| Residue present at Mutation_position|
+| Res_at_Contact_Position| Residue present at the Contact_Position |
+| Energy_MJ| Interaction energy between Res_at_Mut_Position and Res_at_Contact_Position obtained from the MJ potential |
+| Int_dist_change | Mean-squared fluctuation in distance, which we use to estimate entropy, between the contact pair|
+| Contact_break_rank | The rank/order based on when this contact was broken during the simulation |
+
+For example, in the first row, residues at position 17 (K) and 88 (L) were originally in contact. That is, the spatial distance between their C-alpha atoms in the native structure was <= 9 Angstroms. During the unfolding simulation, this was the first residue pair that was broken as it had the highest mean-squared fluctuation in distance. Therefore, we assign the residue pair a Contact_break_rank of 1.
 
 
 ## Use cases
