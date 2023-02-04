@@ -177,7 +177,7 @@ In the above case, the PDB ID is 1AJ3, the chain is A, wildtype residue is I, mu
 |1AJ3A|wt|39|93|H|A|-2.41|2.308|4|
 |1AJ3A|wt|93|39|A|H|-2.41|2.308|4|
 
-*In the above, note that there are duplicate rows for the same broken contact (e.g., 17 and 88). In the present version of the code, only the unique broken contacts are retained for ΔΔG calculation. A newer version of the code will be released to output only the unique rows in the \*_contact_breaks file.*
+*Note that although there are duplicate rows for the same broken contact (e.g., 17 and 88) in this file. However, we only utilize information on the unique broken contacts for ΔΔG calculations. A newer version of the code will be released to output only the unique rows corresponding to unique broken contacts in the \*_contact_breaks file.*
 
 An explanation of each column in the table above is as follows. 
 
